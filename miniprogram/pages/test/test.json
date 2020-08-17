@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "scroll": "../../components/scroll/scroll",
-    "myItem": "../../components/item/console"
-  }
-}

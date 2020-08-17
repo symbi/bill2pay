@@ -141,16 +141,16 @@ Page({
     //update ui all 
     //pData{key,data{key,banks,...}}
     updateUIAll: function(msg, pData) {
-        console.log("updateUIAll msg:", msg);
-        console.log("updateUIAll pData:", pData);
+        //console.log("updateUIAll msg:", msg);
+        //console.log("updateUIAll pData:", pData);
         let that = this;
         let newAll = [];
 
         if (msg == "delete") {
-            console.log('updateUIAll delete----');
+            //console.log('updateUIAll delete----');
             newAll = newAll.concat(this.data.all);
-            console.log("newAll bf:",newAll);
-            console.log('check data_index:',pData.data_index)
+            //console.log("newAll bf:",newAll);
+            //console.log('check data_index:',pData.data_index)
             //todo: check pData.data_index???
             if(pData.data_index>=0){
             newAll.splice(pData.data_index, 1);
@@ -158,16 +158,16 @@ Page({
             //todo: update that.data.keys
             for(let i=0;i<that.data.keys.length;i++){
                 if(that.data.keys[i].key==pData.key){
-                    console.log('found key:',that.data.keys[i]);
+                    //console.log('found key:',that.data.keys[i]);
                     that.data.keys.splice(i,1);
                 }
             }
 
-            console.log("newAll af:",newAll);
+            //console.log("newAll af:",newAll);
             that.setData({
                 all: newAll
             });
-            console.log("UI delete check rest keys:",that.data.keys);
+            //console.log("UI delete check rest keys:",that.data.keys);
             if(that.data.keys.length==0){
                 console.log('2 load new sample for current month');
                 that.createSample();
@@ -185,7 +185,7 @@ Page({
         this.calculatePayment_banks(pData).then(function(pData_paymentInfo) {
             switch (msg) {
                 case 'init': //clear and init
-                    console.log('pData_paymentInfo:', pData_paymentInfo);
+                    //console.log('pData_paymentInfo:', pData_paymentInfo);
                     newAll = newAll.concat(pData_paymentInfo);
                     break;
                 case 'add_btm':
@@ -553,14 +553,13 @@ Page({
                 }
                 break;
             case 'key':
-                console.log("key----!",key);
+                //console.log("key----!",key);
                 //check if key exist
-                
                 that.getDataByKey(key).then(function(data) {
                     if (data.errMsg) {
                         //no data, create from last key
                         let key_bf=that.getKeyBeforeAfter('last', key);
-                        console.log('load key key_bf:',key_bf);
+                        //console.log('load key key_bf:',key_bf);
                         if(key_bf){
                             //create data from before key
                             that.createDataFrom(key, key_bf).then(function(data) {
@@ -571,7 +570,7 @@ Page({
                         }else{//key_bf is not exist, to create key from keys[key_last_index]
                             //create data from this.data.keys[0].key
                             let key_af=that.data.keys[that.data.keys.length-1].key;
-                            console.log("no key_bf, key_af:",key_af);
+                            //console.log("no key_bf, key_af:",key_af);
                             //create data from before key
                             that.createDataFrom(key, key_af).then(function(data) {
                                 that.saveDataByKey(key, data.banks).then(function(banks) {
@@ -580,7 +579,7 @@ Page({
                             });
                         }
                     } else {
-                        console.log("2 load key data:", data);
+                        //console.log("2 load key data:", data);
 
                         that.updateUI(key,data,pos);
                     }
@@ -589,15 +588,15 @@ Page({
                 break;
             
             case 'this': //this month, if not exist load lastest month
-                console.log("load more this:", key);
+                //console.log("load more this:", key);
                 that.getDataByKey(key).then(function(data) {
                     if (data.errMsg) {
                         //no data, go to load more new
-                        console.log("found no this, go to load last of key:",key);
+                        //console.log("found no this, go to load last of key:",key);
                         that.loadMore('last',key,'init');
 
                     } else {
-                        console.log("get load this data:", data);
+                        //console.log("get load this data:", data);
                         that.updateUI(key,data,pos);
                     }
                 });
@@ -611,12 +610,12 @@ Page({
         //sort keys in storage
         wx.getStorageInfo({
             success: (result) => {
-                console.log("rt:",result.keys);
+                //console.log("rt:",result.keys);
                 if(result.keys.length==0){//initial first time
                     that.setData({ showInitGuide: true });
                     that.createSample();
                 }else{
-                    console.log("sort keys:",result.keys)
+                    //console.log("sort keys:",result.keys)
                     let keys=[];
                     let tmp=[];
                     result.keys.forEach((e,i) => {
@@ -639,7 +638,7 @@ Page({
                     keys[0].key_next=that.getKeyOf('next',keys[0].key);
                     keys[0].name_next=that.createNameByKey(keys[0].key_next);
 
-                    console.log("----tmp:",keys);
+                    //console.log("----tmp:",keys);
                     that.setData({keys:keys});
                 }
                 
@@ -653,10 +652,7 @@ Page({
 
         let that = this;
         let year_now=date.getFullYear();
-        console.log('onload year_now:',year_now);
-        
         let month_now=date.getMonth()+1;
-        console.log('onload month_now:',month_now);
         // 高度自适应
         wx.getSystemInfo({
             success: function (res) {
@@ -670,7 +666,7 @@ Page({
                 });
             }
         });
-        console.log('onload this.data.value:',this.data.value);
+        //console.log('onload this.data.value:',this.data.value);
         that.loadKeys();
         that.loadMore('this',null,'init');
 
@@ -1065,74 +1061,100 @@ Page({
         this.createUpdateBank(result[0], result[1], result[2], e.currentTarget.dataset.status);
 
     },
+    addBill: function(e) {
+        let id = e.currentTarget.id.split("-");
+        this.createUpdateBank(null, id[0], id[1], e.currentTarget.dataset.status);
+    },
+    createUpdateBank_delData:function(e){
+        let that = this;
+        let bank2up = {};
+        let allData = that.data.all;
+        bank2up.data_key = pAll_key;
+        //if delData in allData
+        for (let i = 0; i < allData.length; i++) {
+            if (allData[i].key == pAll_key) {
+                bank2up.data_index = i;
+                bank2up.data_name = that.createNameByKey(pAll_key);
+                break;
+            }
+        }
+        that.setData({ updateBank: bank2up });
+    },
+    //pFlag:'EditBill','payBill','AddBill','EditBank','delBill'
+    createUpdateBank_bills:function(pBill_name, pBank_name, pAll_key, pFlag){
+        let that = this;
+        let bank2up = {};
+        let allData = that.data.all;
+        for (let i = 0; i < allData.length; i++) {
+            if (allData[i].key == pAll_key) {
+                for (let j = 0; j < allData[i].banks.length; j++) {
+                    if (allData[i].banks[j].id == pBank_name+'-'+pAll_key) {
+                        //console.log("createUpdateBank add bill, target bank:",allData[i].banks[j]);
+
+                        bank2up.name = allData[i].banks[j].name;
+                        bank2up.bills = [].concat(allData[i].banks[j].bills);//must recreate data if update bill
+                        bank2up.id = allData[i].banks[j].id;
+                        bank2up.bank_index = j;
+                        bank2up.data_index = i;
+                        bank2up.id = bank2up.name + '-' + allData[i].key;
+
+                        if (pFlag == 'EditBill' || pFlag == 'delBill' ||pFlag == 'payBill') {
+                            for (let k = 0; k < allData[i].banks[j].bills.length; k++) {
+                                if (allData[i].banks[j].bills[k].id == pBill_name+'-'+pBank_name+'-'+pAll_key) {
+                                    bank2up.bill_index = k;
+                                    let bill = allData[i].banks[j].bills[k];
+                                    if (pFlag == 'EditBill') {
+                                        
+                                        console.log('createUpdateBank memo check:',bill.memo);
+                                        
+                                        this.navigateToBill('show=' + pFlag + '&title=修改账单&id=' + bill.id + '&name=' + bill.name +
+                                            '&toPay=' + bill.toPay + '&date=' + bill.date + '&payed=' + bill.payed +'&memo=' + bill.memo);
+                                    }else if(pFlag == 'payBill'){ 
+                                        console.log("before set all:",that.data.all)
+                                        //must recreate the data to update otherwise be effect
+                                        //bank2up.bills[k].payed=true;
+                                        bank2up.bills[k]={id:bill.id, name:bill.name, date:bill.date,memo:bill.memo, toPay:bill.toPay,payed:!bill.payed,changed:true}
+                                        that.setData({ updateBank: bank2up });
+                                        console.log("after set all:",that.data.all)
+                                        console.log("check updateBank:",that.data.updateBank)
+                                        that.updataStorage(pFlag);
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        if (pFlag == 'AddBill') {
+                            this.navigateToBill('show=' + pFlag + '&title=添加账单&id=' + bank2up.id);
+                        }
+                        if (pFlag == 'EditBank') {
+                            console.log("To EditBank");
+                            this.navigateToBill('show=' + pFlag + '&title=修改银行&id=' + bank2up.id);
+                        }
+
+                    }
+
+                }
+            }
+        }
+        that.setData({ updateBank: bank2up });
+    },
     createUpdateBank: function(pBill_name, pBank_name, pAll_key, pFlag) {
         let that = this;
         let bank2up = {};
         let allData = that.data.all;
-        console.log("pFlag:",pFlag);
-        console.log("allData:",allData);
-        console.log('createUpdateBank pBill_name:',pBill_name);
-        console.log('createUpdateBank pBank_name:',pBank_name);
-        console.log('createUpdateBank pAll_key:',pAll_key);
+        //console.log("pFlag:",pFlag);
+        //console.log("allData:",allData);
+        //console.log('createUpdateBank pBill_name:',pBill_name);
+        //console.log('createUpdateBank pBank_name:',pBank_name);
+        //console.log('createUpdateBank pAll_key:',pAll_key);
         switch (pFlag) {
             //todo 这里吃相不好看，有空需要优化一下
             case 'EditBill':
             case 'payBill':
             case 'AddBill':
-            case 'EditBank': //check why bank here?
+            case 'EditBank':
             case 'delBill':
-                for (let i = 0; i < allData.length; i++) {
-                    if (allData[i].key == pAll_key) {
-                        console.log("pAll_key");
-                        for (let j = 0; j < allData[i].banks.length; j++) {
-                            if (allData[i].banks[j].id == pBank_name+'-'+pAll_key) {
-                                console.log("createUpdateBank add bill, target bank:",allData[i].banks[j]);
-
-                                bank2up.name = allData[i].banks[j].name;
-                                bank2up.bills = [].concat(allData[i].banks[j].bills);//must recreate data if update bill
-                                bank2up.id = allData[i].banks[j].id;
-                                bank2up.bank_index = j;
-                                bank2up.data_index = i;
-                                bank2up.id = bank2up.name + '-' + allData[i].key;
-
-                                if (pFlag == 'EditBill' || pFlag == 'delBill' ||pFlag == 'payBill') {
-                                    for (let k = 0; k < allData[i].banks[j].bills.length; k++) {
-                                        if (allData[i].banks[j].bills[k].id == pBill_name+'-'+pBank_name+'-'+pAll_key) {
-                                            bank2up.bill_index = k;
-                                            let bill = allData[i].banks[j].bills[k];
-                                            if (pFlag == 'EditBill') {
-                                                
-                                                console.log('createUpdateBank memo check:',bill.memo);
-                                                
-                                                this.navigateToBill('show=' + pFlag + '&title=修改账单&id=' + bill.id + '&name=' + bill.name +
-                                                    '&toPay=' + bill.toPay + '&date=' + bill.date + '&payed=' + bill.payed +'&memo=' + bill.memo);
-                                            }else if(pFlag == 'payBill'){ 
-                                                console.log("before set all:",that.data.all)
-                                                //must recreate the data to update otherwise be effect
-                                                //bank2up.bills[k].payed=true;
-                                                bank2up.bills[k]={id:bill.id, name:bill.name, date:bill.date,memo:bill.memo, toPay:bill.toPay,payed:!bill.payed,changed:true}
-                                                that.setData({ updateBank: bank2up });
-                                                console.log("after set all:",that.data.all)
-                                                console.log("check updateBank:",that.data.updateBank)
-                                                that.updataStorage(pFlag);
-                                            }
-                                            break;
-                                        }
-                                    }
-                                }
-                                if (pFlag == 'AddBill') {
-                                    this.navigateToBill('show=' + pFlag + '&title=添加账单&id=' + bank2up.id);
-                                }
-                                if (pFlag == 'EditBank') {
-                                    console.log("To EditBank");
-                                    this.navigateToBill('show=' + pFlag + '&title=修改银行&id=' + bank2up.id);
-                                }
-
-                            }
-
-                        }
-                    }
-                }
+                that.createUpdateBank_bills(pBill_name, pBank_name, pAll_key, pFlag);
                 break;
 
             case 'AddBank':
@@ -1144,6 +1166,7 @@ Page({
                         this.navigateToBill('show=' + pFlag + '&title=添加银行卡&id=' + pAll_key);
                     }
                 }
+                that.setData({ updateBank: bank2up });
                 break;
             
             case 'upBank':
@@ -1160,7 +1183,7 @@ Page({
                         bank2up.bills = [];//do nothing to exist bills
                     }
                 }
-                //todo: updateStorage
+                
                 that.setData({ updateBank: bank2up });
                 that.updataStorage(pFlag);
                 
@@ -1175,16 +1198,13 @@ Page({
                         break;
                     }
                 }
-
+                that.setData({ updateBank: bank2up });
                 break;
 
         }
-        that.setData({ updateBank: bank2up });
+        //that.setData({ updateBank: bank2up });
     },
-    addBill: function(e) {
-        let id = e.currentTarget.id.split("-");
-        this.createUpdateBank(null, id[0], id[1], e.currentTarget.dataset.status);
-    },
+
 
     onGetUserInfo: function(e) {
         if (!this.data.logged && e.detail.userInfo) {
@@ -1195,30 +1215,11 @@ Page({
             })
         }
     },
-
-    onGetOpenid: function() {
-        // 调用云函数
-        wx.cloud.callFunction({
-            name: 'login',
-            data: {},
-            success: res => {
-                console.log('[云函数] [login] user openid: ', res.result.openid)
-                app.globalData.openid = res.result.openid
-                wx.navigateTo({
-                    url: '../userConsole/userConsole',
-                })
-            },
-            fail: err => {
-                console.error('[云函数] [login] 调用失败', err)
-                wx.navigateTo({
-                    url: '../deployFunctions/deployFunctions',
-                })
-            }
-        })
-    },
+    //call from bill.js
     getUpdateBank: function() {
         return this.data.updateBank;
     },
+    //call from bill.js
     getBanks: function() {
         let data_index = this.data.updateBank.data_index;
         let banks = this.data.all[data_index].banks;

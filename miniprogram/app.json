@@ -2,10 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/bill/bill",
-    "pages/manage/manage",
-    "pages/memo/memo",
-    "pages/test/test"
-    
+    "pages/manage/manage"
   ],
   "window": {
     "backgroundColor": "#FBE8BC",
