@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "slideitem": "../../components/slideitem/slideitem"
+  },
+  "enablePullDownRefresh": false
+}

@@ -1,0 +1,9 @@
+<!--miniprogram/pages/memo.wxml-->
+<view >
+ <textarea bindinput='textinput' maxlength="-1" auto-height="{{true}}">
+
+  
+
+ </textarea>
+
+</view>

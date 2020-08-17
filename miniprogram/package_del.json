@@ -1,0 +1,15 @@
+{
+  "name": "miniprogram",
+  "version": "1.0.0",
+  "description": "bill note miniprogram",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "symbi",
+  "license": "ISC",
+  "dependencies": {
+    "json-server": "^0.15.1",
+    "vant-weapp": "^0.5.27"
+  }
+}

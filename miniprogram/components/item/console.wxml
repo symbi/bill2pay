@@ -1,0 +1,10 @@
+<view>
+  <!--使用组件中的content属性-->    
+  <view >{{content}}  word</view>
+  <slot name="one"></slot>
+  <slot name="two"></slot>
+  <!--使用组件中的methods-->
+  <view>
+    <button size='mini' catchtap='clickMe' class='btn'>cilck here</button>
+  </view>
+</view>

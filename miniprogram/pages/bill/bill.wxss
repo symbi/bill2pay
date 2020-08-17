@@ -1,0 +1,110 @@
+/* miniprogram/pages/bill/bill.wxss */
+page {
+    background: #FFE9B7;
+    /*background: #e2d1c3;*/
+  }
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 50rpx;
+  margin-left: 100rpx;
+  margin-right: 100rpx;
+}
+.container-item-title{
+  font-Size: 34rpx;
+  font-weight: bold;
+  color:#DD632F;
+}
+.container-item{
+  font-Size: 30rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding-bottom: 30rpx;
+  padding-top: 30rpx;
+}
+.container-item-space{
+  font-Size: 30rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 30rpx;
+  padding-top: 30rpx;
+}
+
+.container-item-single{
+  font-Size: 30rpx;
+  padding-top: 30rpx;
+  text-align: center;
+}
+.container-item-left{
+  font-Size: 30rpx;
+}
+
+.container-item_top{
+  font-Size: 30rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 0rpx;
+
+}
+.container-item_bottom{
+  margin-top: 30rpx;
+  font-Size: 30rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20rpx;
+}
+.container-item_right{
+  font-Size: 30rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  /*margin-right: 80rpx;
+  padding: 30rpx;*/
+}
+.container-item-input{
+  border-bottom:2rpx solid #ddd;
+  color:rgb(95, 18, 18);
+  font-size: 38rpx;
+  width: 250rpx;
+}
+.container-item-input.long{
+  width: 100%;
+}
+
+
+.container-item-btn{
+  width: 25%;
+  height: 60rpx;
+  line-height: 60rpx;
+  vertical-align: middle;
+  color:#fff;
+  background: coral;
+  text-align:center;
+  font-size:34rpx;
+  font-weight: bold;
+  border-radius: 10rpx;
+}
+/* not sure if use
+.indicator {
+height: 100rpx;
+border-top: 1px solid red;
+border-bottom: 1px solid red;
+}
+
+.column {
+font-size: 24rpx;
+color: red;
+text-align: center;
+line-height: 100rpx;
+}
+
+.result {
+text-align: center;
+margin-top: 50px;
+}*/
+

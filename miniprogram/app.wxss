@@ -1,0 +1,391 @@
+/**app.wxss**/
+.container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+} 
+
+button {
+  background: initial;
+}
+
+button:focus{
+  outline: 0;
+}
+
+button::after{
+  border: none;
+}
+
+
+page {
+  background: #FFE9B7;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.userinfo, .uploader, .tunnel {
+  margin-top: 40rpx;
+  height: 140rpx;
+  width: 100%;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-left: none;
+  border-right: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transition: all 300ms ease;
+}
+
+.userinfo-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+  background-size: cover;
+  background-color: white;
+}
+
+.userinfo-avatar:after {
+  border: none;
+}
+
+.userinfo-nickname {
+  font-size: 32rpx;
+  color: #007aff;
+  background-color: white;
+  background-size: cover;
+}
+
+.userinfo-nickname::after {
+  border: none;
+}
+
+.uploader, .tunnel {
+  height: auto;
+  padding: 0 0 0 40rpx;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.uploader-text, .tunnel-text {
+  width: 100%;
+  line-height: 52px;
+  font-size: 34rpx;
+  color: #007aff;
+}
+
+.uploader-container {
+  width: 100%;
+  height: 400rpx;
+  padding: 20rpx 20rpx 20rpx 0;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.uploader-image {
+  width: 100%;
+  height: 360rpx;
+}
+
+.tunnel {
+  padding: 0 0 0 40rpx;
+}
+
+.tunnel-text {
+  position: relative;
+  color: #222;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tunnel-text:first-child {
+  border-top: none;
+}
+
+.tunnel-switch {
+  position: absolute;
+  right: 20rpx;
+  top: -2rpx;
+}
+
+.disable {
+  color: #888;
+}
+
+.service {
+  position: fixed;
+  right: 40rpx;
+  bottom: 40rpx;
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  background: linear-gradient(#007aff, #0063ce);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  transition: all 300ms ease;
+}
+
+.service-button {
+  position: absolute;
+  top: 40rpx;
+}
+
+.service:active {
+  box-shadow: none;
+}
+
+.request-text {
+  padding: 20rpx 0;
+  font-size: 24rpx;
+  line-height: 36rpx;
+  word-break: break-all;
+}
+
+.tab-bar {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  padding: 2%;
+  display: flex;
+  justify-content: space-around;
+  box-shadow: 1px 1px 1px 1px #ddd;
+  background-color: #ddd;
+}
+
+.tab-bar button {
+  color: #fff;
+  background-color: #1D82FE;
+}
+
+
+.date-container {
+  margin-top: 30rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color:#474545;
+}
+.date-container-right {
+  margin-top: 30rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  color:#474545;
+}
+.date-container-txt {
+  padding-top: 20rpx;
+  font-size:30rpx;
+}
+.date-container-btn {
+  margin-bottom: 20rpx;
+  padding-left: 15rpx;
+  padding-right: 15rpx;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+  font-size:25rpx;
+  background-color: rgb(20, 87, 99);
+  color: wheat;
+  text-align: center;
+  border-radius: 15rpx;
+}
+.bank-container {
+  width: 100%;
+  background: #DD632F;
+  padding: 0 20rpx 0 20rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  color: #FBE8BC;
+  font-Size: 40rpx;
+  font-weight: bolder;
+}
+
+
+/*item*/
+.bank-bill-date {
+  line-height:60rpx;
+  display:flex;
+  flex-direction:row;
+  justify-content:flex-end;
+  padding-right:40rpx;
+}
+
+.bank-bill-date.payed{
+  line-height:61rpx;
+  background:#afafae;
+}
+.bank-bill-date-guide {
+  line-height:60rpx;
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+  padding-right:40rpx;
+  padding-left:40rpx;
+  align-items: center;
+}
+.bank-bill{
+  height:60rpx;
+  background:#d7a078;
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+  padding-right:40rpx;
+  padding-left:40rpx;
+  align-items: center;
+}
+.bank-bill.payed{
+  background:#999998;
+}
+.bank-bill.changed{
+  background:#e2d1c3;
+}
+
+
+
+
+.modal-mask{
+  width:100%;
+  height:100%;
+  position:fixed;
+  top:0;
+  left:0;
+  background: #000;
+  opacity: 0.5;
+  overflow: hidden;
+  z-index:8000;
+  color:#fff;
+}
+
+.modal-dialog{
+  width:540rpx;
+  position: fixed;
+  z-index: 9000;
+  background: #fff;
+  margin: 200rpx 105rpx;
+  border-radius: 20rpx;
+}
+.modal-title{
+  position: relative;
+  padding-top: 40rpx;
+  padding-bottom: 30rpx;
+  font-size:36rpx;
+  font-weight: bold;
+  color:#DD632F;
+  text-align: center;
+}
+.modal-content{
+  position: relative;
+  /*padding: 50rpx 32rpx;*/
+  padding: 30rpx;
+  text-align: center;
+  font-size:33rpx;
+  color:#666;
+}
+.modal-footer{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 40rpx;
+}
+
+/*---date picker----*/
+.birthday {
+  padding: 100rpx 0; 
+  font-size: 36rpx;
+}
+
+/* 自定义遮罩层*/
+
+.birthday-mask {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+/* 自定义按钮 */
+
+.picker-header {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 0 30rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  background-color: #f6f6f6;
+  z-index: 999;
+}
+/*test*/
+.picker-btn {
+  padding: 0 30rpx;
+  line-height: 80rpx;
+  color: #999;
+  font-size: 32rpx;
+}
+
+.picker-btn:last-child {
+  /*color: #090;*/
+  color:#DD632F;
+}
+
+
+/* 自定义动画 */
+
+.birthday-box {
+  height: 600rpx;
+  width: 100%;
+  padding-top: 80rpx;
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  transform: translateY(100%);
+  transition: 0.5s;
+}
+
+.birthday-show {
+  transform: translateY(0);
+}
+
+.birthday-picker {
+  width: 100%;
+  height: 320rpx;
+  text-align: center;
+  color:#DD632F;
+}
+
+.birthday-indicator {
+  height: 80rpx;
+}
+
+.birthday-picker picker-view-column view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
