@@ -1,0 +1,15 @@
+<view class="{{inputGrey?'input grey':'input'}}" style='width: {{cellWidth}}; text-align: {{inputAlign}};'>
+    <view><input type='{{inputType}}' 
+    placeholder='{{inputHint}}'
+    focus="{{keyboard}}"
+    bindinput='inputListener' 
+    bindconfirm='inputConfirm' 
+    bindfocus='inputFocus'
+    bindblur='inputBlur'
+    value='{{inputValue}}'></input></view>
+
+    <view class="clear" catch:touchend="clearTap">
+        <image class="{{isClearShow?'clearImgShow':'clearImgHide'}}" 
+    src='../../images/clear.png' mode='widthFix'/>
+    </view>
+</view>

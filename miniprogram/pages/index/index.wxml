@@ -1,98 +1,26 @@
 <view>
-
-	<scroll-view scroll-x="false" class="tab-h" scroll-left="{{scrollLeft}}">
-		<view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">账本</view>
-		<view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">管理</view>
-	</scroll-view>
 	<swiper
-	 class="tab-content"
+	 class="tab-content2"
 	 current="{{currentTab}}"
 	 duration="100"
    bindchange="switchTab"
-	 style="height:{{winHeight}}rpx"
+	 style="height:{{winHeight-80}}rpx"
   >
-		<swiper-item catchtouchmove='preventTouchMove' wx:for="{{[0,1]}}" wx:key="swiperKey">
-      <scroll-view scroll-y="true" class="scoll-h" upper-threshold="0"
+		<swiper-item catchtouchmove='preventTouchMove' wx:for="{{[0,1,2]}}" wx:key="swiperKey">
+      <scroll-view scroll-y="true" class="scoll-h" upper-threshold="-45"
         bindscrolltoupper='onPullDownRefresh' bindscrolltolower='onReachBottom'>
 
         <view  wx:if="{{currentTab==0}}" class="container">
-          <!--
-          <view wx:if="{{showInitGuide}}">
-            <view wx:for="{{all}}" wx:key="key">
-              
-              <slideitem id="{{item.key}}" class='cell-class'
-                          itemColor='#FFE9B7'
-                          cellHeight="120rpx"
-                          bind:deleteItemEvent='deleteRecord'>
-                <view class="date-container">
-                  <view class="date-container-txt">{{item.name}}</view>
-                  <text class="date-container-btn" bindtap="addBank" id="{{item.key}}" data-status="AddBank">添加卡</text>        
-                </view>
-              </slideitem>
-
-              <view wx:for="{{item.banks}}" wx:key="id" wx:for-index="idxItm">
-                <view class="bank-container">
-                  <view bindtap="bankEdit" id="{{item.id}}" data-status="EditBank">{{item.id}}</view>
-                  <view class="bank-container-btn-add"  bindtap="addBill" id="{{item.id}}" data-status="AddBill">帐单+</view>
-                </view>
-                
-                <slideitem  id="{{billItem.id}}" 
-                            data-status="EditBill"
-                            class='cell-class'
-                            row="{{index}}"
-                            itemColor="#fff"
-                            bind:deleteItemEvent='deleteAction'
-                            bind:selectItemEvent='itemEdit'
-                            cellHeight="120rpx" 
-                            wx:for="{{item.bills}}" 
-                            wx:for-item="billItem"
-                            wx:key="id">
-                    <view wx:if="{{billItem.payed}}">
-                      <view class='bank-bill-payed'>
-                          <view >{{billItem.name}}</view>
-                          <view >${{billItem.toPay}}</view>            
-                      </view>
-                    </view>
-                    <view wx:else>
-                      <view class='bank-bill'>
-                          <view >{{billItem.name}}</view>
-                          <view >${{billItem.toPay}}</view>            
-                      </view>
-                    </view>
-                    <view class='bank-bill-date-guide'>
-                      <view >滑动可删除</view>
-                      <view >{{billItem.date}}</view>
-                    </view>*/
-                </slideitem>          
-
-                <view class="bill-container-total">
-                  <view >合计</view>
-                  <view >${{item.total}}</view>         
-                </view>
-                <view class="bill-container-total">
-                  <view >已付</view>
-                  <view >${{item.payed}}</view>          
-                </view>
-                <view class="bill-container-total">
-                  <view >未付</view>
-                  <view >${{item.topay}}</view>          
-                </view>
-
-              </view>
-            </view>            
-          </view>
-          <view wx:else>
-          -->
           
           <!--check here-->
           <view wx:for="{{all}}" wx:key="key">
-            <slideitem id="{{item.key}}" class='cell-class'
+            <slideitem id="{{item.key}}"
                         itemColor='#FFE9B7'
                         cellHeight="120rpx"
                         bind:deleteItemEvent='deleteRecord'>
               <view class="date-container">
                 <view class="date-container-txt">{{item.name}}</view>
-                <text class="date-container-btn" bindtap="addBank" id="{{item.key}}" data-status="AddBank">添加卡</text>        
+                <!--<text class="date-container-btn" bindtap="addBank" id="{{item.key}}" data-status="AddBank">添加银行</text> -->       
               </view>
             </slideitem>
 
@@ -116,6 +44,7 @@
                           itemColor="#fff"
                           showBtn="2"
                           actName="{{billItem.payed?'未付':'已付'}}"
+                          actLightName="未付"
                           bind:deleteItemEvent='billDelete'
                           bind:selectItemEvent='itemEdit'
                           bind:actItemEvent='billPay'
@@ -166,30 +95,109 @@
         </view>
 
         <view wx:if="{{currentTab==1}}">
-          <view class="date-container-right">
-              <text class="date-container-btn" bindtap="addData" >添加账本</text>        
-          </view>
           <view wx:for="{{keys}}" 
                 wx:for-item="item" wx:key="index">
             
-            <slideitem  class='cell-class'
-                        itemColor='#FFE9B7'
+            <slideitem  itemColor='#FFE9B7'
                         cellHeight="100rpx"
                         showBtn="1"
                         bind:deleteItemEvent='deleteRecord'
                         bind:selectItemEvent='selectRecord'
                         id="{{item.key}}">
-              <view class="record-container-even">{{item.name}}</view>           
+              <view class="slideitem-manage">{{item.name}}</view>           
             </slideitem>
           </view>  
         </view>
+        <view  wx:if="{{currentTab==2}}">
+          <slideitem  id="{{thing.id}}" 
+                      bind:deleteItemEvent='thingDelete'
+                      bind:selectItemEvent='editThing'
+                      bind:actItemEvent='thingComplete'
+                      showBtn="2"
+                      actName="{{thing.payed?'未完':'完成'}}"
+                      actLightColor="#d7a078"
+                      actLightName="未完"
+                      itemColor="#d7a078"
+                      cellHeight="100rpx" 
+                      heightProcent="97%"
+                      wx:for="{{todo}}" 
+                      wx:for-item="thing"
+                      wx:key="id">
 
+              <view wx:if="{{thing.payed}}">
+                <view class='bank-bill todo payed'>
+                    <view >{{thing.name}}</view>
+                    <view >{{thing.date}}</view>            
+                </view>
+              </view>
+              <view wx:else>
+                <view class='bank-bill todo'>
+                    <view >{{thing.name}}</view>
+                    <view >{{thing.date}}</view>            
+                </view>
+              </view>
+              
+          </slideitem>
+        </view>
 			</scroll-view>
     </swiper-item>
   
   </swiper>
 
+	<view class="tab-h2" >
+    <view class="tab-item2">
+      <view wx:if="{{currentTab==2}}"data-current="2" bindtap="addThing">
+        <image class="tab-item-img tab-item-img.add" /> 
+        <view class="tab-item-text active" >todo</view>
+      </view>
+      <view wx:else data-current="2" bindtap="swichNav">
+        <image class="tab-item-img tab-item-img.todo" /> 
+        <view class="tab-item-text" >todo</view>
+      </view>
+    </view>
+    
+    <view class="tab-item2">
+      <view wx:if="{{currentTab==0}}"bindtap="powerDrawer" data-statu="open">
+        <image class="tab-item-img tab-item-img.add" /> 
+        <view class="tab-item-text active" >账本</view>
+      </view>
+      <view wx:else data-current="0" bindtap="swichNav">
+        <image class="tab-item-img tab-item-img.bill"/>
+        <view class="tab-item-text">账本</view>
+      </view>
+    </view>
+
+    <view class="tab-item2">
+      <view wx:if="{{currentTab==1}}"data-current="1" bindtap="addData">
+        <image class="tab-item-img tab-item-img.add" /> 
+        <view class="tab-item-text active">管理</view>
+      </view>
+      <view wx:else data-current="1" bindtap="swichNav">
+          <image class="tab-item-img tab-item-img.manage"/>
+          <view class="tab-item-text">管理</view>
+      </view>
+    </view>
+  </view>
+ 
 </view>
+
+
+
+<!--mask-->
+<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
+
+<!--content-->
+<!--使用animation属性指定需要执行的动画 animation="{{animationData}}" -->
+<view class="drawer_attr_box" wx:if="{{showModalStatus}}">
+  <!--drawer content-->
+  <view class="drawer_content">
+    <!--<view class="drawer_title line" bindtap="addData">添加账本</view>-->
+    <view class="drawer_title line" bindtap="menuAddBank">添加银行</view>
+    <view class="drawer_title line" bindtap="menuAddBill">添加帐单</view>
+  </view>
+</view>
+
+
 
 
 <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove"
@@ -210,31 +218,15 @@ wx:if="{{showDatePicker}}"></view>
   </view>
 </view>
 
-<!--
-<view class="birthday-mask" hidden="{{!birthdayshow}}"></view>
-<view class="birthday-box {{birthdayshow?'birthday-show':''}}">
-  <view class="picker-header">
-    <view class="picker-btn" data-index="{{index}}" wx:for="{{picker_btn}}" wx:key bindtap="selectBirthday">{{item}}</view>
-  </view>
-  <picker-view class="birthday-picker" indicator-class="birthday-indicator" value="{{value}}" bindchange="bindChange">
-    <picker-view-column>
-      <view wx:for="{{years}}" wx:key>{{item}}年</view>
-    </picker-view-column>
-    <picker-view-column>
-      <view wx:for="{{months}}" wx:key>{{item}}月</view>
-    </picker-view-column>
-  </picker-view>
-</view>
--->
 
 <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove"
 wx:if="{{showDelConfirm}}"></view>
 <view class="modal-dialog" wx:if="{{showDelConfirm}}">
   <view class="modal-title">删除确认</view>
   <view class="modal-content">
-
-    <view wx:if="{{updateBank.bills}}">帐单 {{updateBank.bills[updateBank.bill_index].name}}</view>
-    <view wx:else>{{updateBank.data_name}} 里所有银行及其帐单</view>
+    
+    <view wx:if="{{updateBank.bills}}">账单 {{updateBank.bills[updateBank.bill_index].name}}</view>
+    <view wx:else>{{updateBank.data_name}} 里所有银行及其账单</view>
 
   </view>
 
@@ -242,6 +234,21 @@ wx:if="{{showDelConfirm}}"></view>
     <button size="mini" class="btn-modal" bindtap="onCancel" data-status="cancel">取消</button>
     <button wx:if="{{updateBank.bills}}" size="mini" class="btn-modal" bindtap="onConfirm" data-status="btn_delBill_confirm">确定</button>
     <button wx:else size="mini" class="btn-modal" bindtap="onConfirm" data-status="btn_delData_confirm">确定</button>
+  </view>
+</view>
+
+<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove"
+wx:if="{{showDuplicateInfo}}"></view>
+<view class="modal-dialog" wx:if="{{showDuplicateInfo}}">
+  <view class="modal-title">此帐单已经存在</view>
+  <view class="modal-content">
+    
+    <view >{{updateBank.bills[updateBank.bank_index].name}}</view>
+
+  </view>
+
+  <view class="modal-footer">
+    <button size="mini" class="btn-modal" bindtap="onConfirm" data-status="btn_duplicate_confirm">确定</button>
   </view>
 </view>
 

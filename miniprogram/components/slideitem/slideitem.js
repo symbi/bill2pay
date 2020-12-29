@@ -10,8 +10,18 @@ Component({
   properties: {
     actName:{
       type: String,
-      value: '未付'
+      value: ''
     },
+    actLightName:{
+      type: String,
+      value: ''
+    },
+    //slide btn color
+    actLightColor: {
+      type: String,
+      value: '#e2d1c3'
+    },
+    //item background color
     itemColor: {
       type: String,
       value: '#fff'
@@ -19,6 +29,10 @@ Component({
     cellHeight: {
       type: String,
       value: '120rpx'
+    },
+    heightProcent:{
+      type: String,
+      value: '100%'
     },
     row: {
       type: Number,
@@ -124,6 +138,7 @@ Component({
       })
     },
     selectAction:function(){
+      this.restoreSalid();
       this.triggerEvent('selectItemEvent', { row: this.data.row, section: this.data.section });
     }
   }

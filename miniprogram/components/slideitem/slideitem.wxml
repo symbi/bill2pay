@@ -5,23 +5,23 @@
 	 bindtouchstart="touchS"
 	 bindtouchmove="touchM"
 	 bindtouchend="touchE"
-   style="{{slideStyle}};background-color: {{itemColor}}"
+   style="{{slideStyle}};background-color: {{itemColor}};height:{{heightProcent}}"
 	 catchtap='selectAction'
 	>
 		<!-- 这里是组件的内部节点 -->
 		<slot/>
 	</view>
-	<view class='item-inner btn del' style='line-height: {{cellHeight}}'
+	<view class='item-inner btn del' style='line-height: {{cellHeight}};height:{{heightProcent}}'
    data-indexpath="{{section}}-{{row}}" bindtap="delItem">
     删除
   </view>
   
-	<view wx:if="{{actName=='未付'}}" class='item-inner btn payed'
-    style='line-height: {{cellHeight}}' bindtap="actCustom">
+	<view wx:if="{{actName==actLightName}}" class='item-inner btn payed'
+    style='background-color: {{actLightColor}}; line-height: {{cellHeight}};height:{{heightProcent}}' bindtap="actCustom">
     {{actName}}
 	</view>
   <view wx:else class='item-inner btn unpayed'
-    style='line-height: {{cellHeight}}' bindtap="actCustom">
+    style='line-height: {{cellHeight}};height:{{heightProcent}}' bindtap="actCustom">
     {{actName}}
 	</view>
 </view>

@@ -1,14 +1,13 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/bill/bill",
-    "pages/manage/manage"
+    "pages/bill/bill"
   ],
   "window": {
     "backgroundColor": "#FBE8BC",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#FBE8BC",
-    "navigationBarTitleText": "出账笔记",
+    "navigationBarTitleText": "支出手帐",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json",

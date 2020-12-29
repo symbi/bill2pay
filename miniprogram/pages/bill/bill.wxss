@@ -1,6 +1,7 @@
 /* miniprogram/pages/bill/bill.wxss */
 page {
     background: #FFE9B7;
+    position: fixed;
     /*background: #e2d1c3;*/
   }
 .container{
@@ -11,71 +12,59 @@ page {
   margin-left: 100rpx;
   margin-right: 100rpx;
 }
-.container-item-title{
+.scroll{
+  position: relative;
+}
+.container-test{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 100rpx;
+  margin-right: 100rpx;
+  background-color: rosybrown;
+  
+}
+.item{
+  margin:30rpx 0;
+  font-Size: 30rpx;
+}
+.bold{
   font-Size: 34rpx;
   font-weight: bold;
   color:#DD632F;
 }
-.container-item{
-  font-Size: 30rpx;
+.start{
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  padding-bottom: 30rpx;
-  padding-top: 30rpx;
-}
-.container-item-space{
-  font-Size: 30rpx;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding-bottom: 30rpx;
-  padding-top: 30rpx;
-}
-
-.container-item-single{
-  font-Size: 30rpx;
-  padding-top: 30rpx;
-  text-align: center;
-}
-.container-item-left{
   font-Size: 30rpx;
 }
-
-.container-item_top{
-  font-Size: 30rpx;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding: 0rpx;
-
-}
-.container-item_bottom{
-  margin-top: 30rpx;
-  font-Size: 30rpx;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 20rpx;
-}
-.container-item_right{
-  font-Size: 30rpx;
+.end{
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  /*margin-right: 80rpx;
-  padding: 30rpx;*/
 }
-.container-item-input{
+.item-top{
+  padding-top: 30rpx;
+}
+.item-bottom{
+  padding-bottom: 30rpx;
+}
+.center{
+  text-align: center;
+}
+.between{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.line{
   border-bottom:2rpx solid #ddd;
   color:rgb(95, 18, 18);
   font-size: 38rpx;
-  width: 250rpx;
+  width: 350rpx;
 }
-.container-item-input.long{
-  width: 100%;
-}
-
 
 .container-item-btn{
   width: 25%;
@@ -89,6 +78,25 @@ page {
   font-weight: bold;
   border-radius: 10rpx;
 }
+.long{
+  width: 35%;
+}
+.item-test{
+  /*margin:30rpx 120rpx;*/
+  align-items: center;
+  margin: auto;
+  width: 60%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+ 
+}
+.tab-h2{
+  margin-top:1061.25rpx;
+  width:100%;
+  height: 120rpx;
+  background-color: None;
+  position: fixed}
 /* not sure if use
 .indicator {
 height: 100rpx;

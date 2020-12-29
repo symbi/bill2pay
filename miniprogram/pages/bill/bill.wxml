@@ -1,39 +1,90 @@
 <!--miniprogram/pages/bill/bill.wxml-->
 
-<!--edit bill-->
-<view class="container" wx:if="{{showEditBill}}">
-
-
-  <view class="container-item_top">
-    <view class="container-item-title">
-      <view >{{title_year}}年{{title_month}}月 {{bank}}</view>
-    </view>
+<!--edit bill todo bank-->
+<view class="container" wx:if="{{showEditBill || showThing2Bill}}">
+  <view class="center bold" wx:if="{{showEditBill}}">
+    
+      <view >{{title_year}}年{{title_month}}月</view>
     
   </view>
-  <view class="container-item-left">账单名</view>
-  
-  <view class="container-item">
-    <view class="container-item-input long">
-      <input type="text" id="name" bindinput="input" value="{{name}}" ></input>
-    </view>    
-  </view>
-  <view class="container-item">
-    <view>付款金额：</view>
-    <view class="container-item-input">
-      <input type="digit" id="toPay" bindinput="input" value="{{toPay}}" ></input>
+  <view class="item between" wx:else>
+    <view >选择账本:</view>
+    <view class="line" style="width:350rpx" 
+    bindtap="onShowPickDay" id="records">
+      <view wx:if="{{val_record<0}}" id="records">点击选择账本</view>
+      <view wx:else id="records">{{records[val_record]}}</view>
     </view>
+  </view>
+  <view class="item between">
+    <view >选择银行:</view>
+    <view class="line" style="width:350rpx" 
+    bindtap="onShowPickDay" id="banks">
+      <view wx:if="{{val_bank<0}}" id="banks">点击选择银行</view>
+      <view wx:else id="banks">{{banks[val_bank]}}</view>
+    </view>
+  </view>
+  <view class="{{showPickRecord?'birthday-mask':''}}" bindtap="hideModal">
+     <view class="birthday-box {{showPickRecord?'birthday-show ':''}}" >
+      <view class="picker-header">
+        <view class="picker-btn" data-index="{{index}}" 
+        wx:for="{{picker_btn}}" wx:key="*this" 
+        id="records"
+        bindtap="onPickerConfirm">{{item}}</view>
+      </view> 
+      <picker-view class="birthday-picker" 
+      indicator-class="birthday-indicator" 
+      bindchange="bindChange"
+      id="records">
+        <picker-view-column>
+          <view wx:for="{{records}}" wx:key="*this">{{item}}</view>
+        </picker-view-column>
+      </picker-view>
+    </view>
+  </view>
+  <view class="{{showPickBank?'birthday-mask':''}}" bindtap="hideModal">
+    <view class="birthday-box {{showPickBank?'birthday-show':''}}">
+      <view class="picker-header">
+        <view class="picker-btn" data-index="{{index}}" 
+        wx:for="{{picker_btn}}" wx:key="*this" 
+        id="banks"
+        bindtap="onPickerConfirm">{{item}}</view>
+      </view> 
+      <picker-view class="birthday-picker" 
+      indicator-class="birthday-indicator" 
+      bindchange="bindChange" value="{{[val_bank]}}"
+      id="banks">
+        <picker-view-column>
+          <view wx:for="{{banks}}" wx:key="*this">{{item}}</view>
+        </picker-view-column>
+      </picker-view>
+    </view>
+  </view>
+  
+  <view class="start item-top">
+    <view>账单名称：</view>
+  </view>
+  <view class="item-bottom">
+    <clearInput cellWidth="100%" inputValue="{{name}}"
+    bind:inputListener='input' id="name" inputHint="必填"/>
   </view>
 
-  <view class="container-item-space">
-    <view>付款日期：</view>
-    <view class="container-item-input" bindtap="onShowPickDay">
-      {{month}}月{{day}}日
+  <view class="item between">
+    <view style='width:40%'>付款金额：</view>
+    <view><clearInput cellWidth="100%" inputValue="{{toPay}}" inputType="digit"
+  bind:inputListener='input' id="toPay" inputHint="默认为0"/></view>
+  </view>
+
+  <view class="item between">
+    <view class="between">
+      <view>付款日期：</view>
+      <view class="line" style="width:200rpx" bindtap="onShowPickDay">
+        {{month}}月{{day}}日
+      </view>
     </view>
-    <view class="container-item_right">
+    <view class="between">
       <checkbox-group bindchange="billCheck" id="payed">
         <checkbox value="payed" checked="{{payed}}"/>
       </checkbox-group> 
-      
       <view>已付</view>
     </view>
   </view>  
@@ -52,15 +103,13 @@
     </picker-view>
   </view>
   
-
-  <view class="container-item-left">MEMO:</view>
-  <view class="container-item">
-    <view class="container-item-input long">
-      <input type="text" id="memo" bindinput="input" value="{{memo}}" ></input>
-    </view>
+  <view class="item-bottom">
+    <view >MEMO:</view>
+    <clearInput cellWidth="100%" inputValue="{{memo}}"
+    bind:inputListener='input' id="memo" inputHint="选填"/>
   </view>
 
-  <view class="container-item_bottom">
+  <view class="item between">
     <view class="container-item-btn" bindtap="cancel" >取消</view>
     <view class="container-item-btn" bindtap="confirm" data-status="btn_editBill_confirm">确定</view>
   </view>
@@ -99,86 +148,259 @@
 
 <!--add bill-->
 <view class="container" wx:if="{{showAddBill}}">
-  <view class="container-item_top">
-    <view class="container-item-title">
+  <view class="center bold">
       <view >{{title_year}}年{{title_month}}月 {{bank}} {{name}}</view>
-    </view>
   </view>
   
-  <view class="container-item">
+  <view class="start item-top">
     <view>账单名称：</view>
-
   </view>
-  <view class="container-item">
-    <view class="container-item-input long">
-      <input type="text" id="name" bindinput="input" ></input>
-    </view>
+  <view class="item-bottom">
+    <clearInput cellWidth="100%" 
+    inputHint="必填"
+    bind:inputListener='input' id="name"/>
   </view>
 
-  <view class="container-item">
+  <view class="item between">
     <view>付款金额：</view>
-    <view class="container-item-input">
-      <input type="digit" id="toPay" bindinput="input" ></input>
-    </view>
+    <clearInput cellWidth="350rpx" 
+    inputHint="默认为0"
+    inputType="digit" bind:inputListener='input' 
+    id="toPay"/>
   </view>
-  <view class="container-item-title">
+
+  <view class="item bold">
     <view >付款日期：</view>
-    <view >
-      <picker-view class="birthday-picker" indicator-class="birthday-indicator" value="{{val}}" bindchange="bindChange">
-        <picker-view-column>
-          <view wx:for="{{months}}" wx:key="*this">{{item}}月</view>
-        </picker-view-column>
-        <picker-view-column>
-          <view wx:for="{{days}}" wx:key="*this">{{item}}日</view>
-        </picker-view-column>
-      </picker-view>
-    </view>
   </view>
-<!--   
-  <view class="container-item">
-    <view>付款日期：</view>
-    <view class="container-item-input">
-      <input type="text" id="date" bindinput="input" ></input>
-    </view>
+
+  <view >
+    <picker-view class="birthday-picker" indicator-class="birthday-indicator" value="{{val}}" bindchange="bindChange">
+      <picker-view-column>
+        <view wx:for="{{months}}" wx:key="*this">{{item}}月</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{days}}" wx:key="*this">{{item}}日</view>
+      </picker-view-column>
+    </picker-view>
   </view>
--->
-  <view class="container-item_right">
-    
-      <checkbox-group bindchange="billCheck" id="payed">
-          <checkbox value="payed" checked="{{payed}}"/>
-      </checkbox-group>
-    
+
+  <view class="item end">
+    <checkbox-group bindchange="billCheck" id="payed">
+        <checkbox value="payed" checked="{{payed}}"/>
+    </checkbox-group>   
     <view>已付</view>
   </view>
-  <view class="container-item-left">MEMO:</view>
-  <view class="container-item">
-    <view class="container-item-input long">
-      <input type="text" id="memo" bindinput="input" value="{{memo}}" ></input>
-    </view>
+
+
+  <view >MEMO:</view>
+  <view class="item-bottom">
+    <clearInput cellWidth="100%" 
+    bind:inputListener='input' 
+    inputHint="选填"
+    id="memo"/>
   </view>
-  <view class="container-item_bottom">
+
+  <view class="item between">
     <view class="container-item-btn" bindtap="cancel" >取消</view>
     <view class="container-item-btn" bindtap="confirm" data-status="btn_addBill_confirm">确定</view>
   </view>
-
   
 </view>
 
 
+<!--add bill from menu todo
+
+
+<scroll-view  wx:if="{{showMenuAddBill}}" scroll-y="true" style="height:1061.25rpx;">
+-->
+<view class="container scroll" wx:if="{{showMenuAddBill}}">
+
+  <view class="item-bottom between">
+    <view class="between">
+      <view >选择账本:</view>
+      <view class="line center" style="width:350rpx" 
+      bindtap="onShowPickDay" id="records">
+        <view wx:if="{{val_record<0}}" id="records">点击选择账本</view>
+        <view wx:else id="records">{{records[val_record]}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="item between">
+    <view class="between">
+      <view >选择银行:</view>
+      <view class="line center" style="width:350rpx" 
+      bindtap="onShowPickDay" id="banks">
+        <view wx:if="{{val_bank<0}}" id="banks">点击选择银行</view>
+        <view wx:else id="banks">{{banks[val_bank]}}</view>
+      </view>
+    </view>  
+  </view>
+
+  <view class="{{showPickRecord?'birthday-mask':''}}" bindtap="hideModal">
+     <view class="birthday-box {{showPickRecord?'birthday-show ':''}}" >
+      <view class="picker-header">
+        <view class="picker-btn" data-index="{{index}}" 
+        wx:for="{{picker_btn}}" wx:key="*this" 
+        id="records"
+        bindtap="onPickerConfirm">{{item}}</view>
+      </view> 
+      <picker-view class="birthday-picker" 
+      indicator-class="birthday-indicator" 
+      bindchange="bindChange"
+      id="records">
+        <picker-view-column>
+          <view wx:for="{{records}}" wx:key="*this">{{item}}</view>
+        </picker-view-column>
+      </picker-view>
+    </view>
+  </view>
+
+  <view class="{{showPickBank?'birthday-mask':''}}" bindtap="hideModal">
+    <view class="birthday-box {{showPickBank?'birthday-show':''}}">
+      <view class="picker-header">
+        <view class="picker-btn" data-index="{{index}}" 
+        wx:for="{{picker_btn}}" wx:key="*this" 
+        id="banks"
+        bindtap="onPickerConfirm">{{item}}</view>
+      </view> 
+      <picker-view class="birthday-picker" 
+      indicator-class="birthday-indicator" 
+      bindchange="bindChange"
+      id="banks">
+        <picker-view-column>
+          <view wx:for="{{banks}}" wx:key="*this">{{item}}</view>
+        </picker-view-column>
+      </picker-view>
+    </view>
+  </view>
+
+
+<!--
+  <view class="item-bottom bold">
+    <view >选择银行:</view>
+  </view>
+  
+  <view >
+    <picker-view class="birthday-picker" 
+    indicator-class="birthday-indicator" 
+    bindchange="bindChange" id="banks">
+      <picker-view-column>
+        <view wx:for="{{banks}}" wx:key="*this">{{item}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+-->
+  <view class="start item-top">
+    <view>账单名称:</view>
+  </view>
+  <view class="item-bottom">
+    <clearInput cellWidth="100%" 
+    bind:inputListener='input' id="name" inputHint="必填项目"/>
+  </view>
+
+
+  <view class="item between">
+    <view>付款金额:</view>
+    <clearInput cellWidth="350rpx" 
+    inputHint="默认为0"
+    inputType="digit" 
+    bind:inputListener='input' id="toPay"/>
+  </view>
+
+<!--
+  <view class="item between">
+    <view class="between">
+      <view>付款日期:</view>
+      <view class="line center" style="width:250rpx" bindtap="onShowPickDay">
+        <view wx:if="{{val<0}}">点击选择日期</view>
+        <view wx:else>{{month}}月{{day}}日</view>
+      </view>
+    </view>
+    <view class="between">
+      <checkbox-group bindchange="billCheck" id="payed">
+        <checkbox value="payed" checked="{{payed}}"/>
+      </checkbox-group> 
+      <view>已付</view>
+    </view>
+  </view> 
+
+  <view class="birthday-box {{showPickDay?'birthday-show':''}}">
+    <view class="picker-header">
+      <view class="picker-btn" data-index="{{index}}" wx:for="{{picker_btn}}" wx:key="*this" bindtap="onPickerConfirm">{{item}}</view>
+    </view>   
+    <picker-view class="birthday-picker" indicator-class="birthday-indicator" value="{{val}}" bindchange="bindChange">
+      <picker-view-column>
+        <view wx:for="{{months}}" wx:key="*this">{{item}}月</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{days}}" wx:key="*this">{{item}}日</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+-->
+  <view class="item bold">
+    <view >付款日期：</view>
+  </view>
+
+  <view >
+    <picker-view class="birthday-picker" indicator-class="birthday-indicator" value="{{val}}" bindchange="bindChange">
+      <picker-view-column>
+        <view wx:for="{{months}}" wx:key="*this">{{item}}月</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{days}}" wx:key="*this">{{item}}日</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+
+  <view class="item end">
+    <checkbox-group bindchange="billCheck" id="payed">
+        <checkbox value="payed" checked="{{payed}}"/>
+    </checkbox-group>   
+    <view>已付</view>
+  </view>
+
+  <view class="start">MEMO:</view>
+  <view class="item-bottom">
+    <clearInput cellWidth="100%" 
+    bind:inputListener='input' id="memo" inputHint="选填项目"/>
+  </view>
+
+  <view class="item between">
+    <view class="container-item-btn" bindtap="cancel" >取消</view>
+    <view class="container-item-btn" bindtap="confirm" data-status="btn_addBill_menu_confirm">确定</view>
+  </view>
+
+
+</view>
+
+<!-- if use scroll view 
+</scroll-view> 
+
+
+  <view class="tab-h2 between"  wx:if="{{showMenuAddBill}}">
+    <view class="item-test">
+      <view class="container-item-btn" bindtap="cancel" >取消</view>
+      <view class="container-item-btn" bindtap="confirm" data-status="btn_addBill_confirm">确定</view>
+    </view>
+  </view>
+-->
+
+
 <!--edit bank-->
 <view class="container" wx:if="{{showEditBank}}">
-  <view class="container-item_top">
-    <view class="container-item-title">
+  <view class="center bold">
       <view >{{title_year}}年{{title_month}}月</view>
-    </view>
   </view>
-  <view class="container-item-single">银行卡名</view>
-  <view class="container-item-single">
-    <view class="container-item-input long">
-      <input type="text" id="name" bindinput="input" value="{{name}}"></input>
-    </view>
+  <view class="item center">银行卡名</view>
+
+  <view class="item-bottom">
+    <clearInput cellWidth="100%" inputAlign="center" 
+    inputValue="{{name}}" bind:inputListener='input' id="name"/>
   </view>
-  <view class="container-item_bottom">
+
+  <view class="item between">
     <view class="container-item-btn" bindtap="deleteBank" >删除</view>
     <view class="container-item-btn" bindtap="cancel" >取消</view>
     <view class="container-item-btn" bindtap="confirm" data-status="btn_editBank_confirm">确定</view>
@@ -187,22 +409,50 @@
 
 <!--add bank-->
 <view class="container" wx:if="{{showAddBank}}">
-  <view class="container-item_top">
-    <view class="container-item-title">
-      <view >{{title_year}}年{{title_month}}月</view>
-    </view>
+  <view class="center bold">
+    <view >{{title_year}}年{{title_month}}月</view>
   </view>
-  <view class="container-item-single">
-    <view class="container-item-input long">
-      <input type="text" id="name" bindinput="input" placeholder="请输入银行卡名"></input>
-    </view>
+
+  <view class="item">
+    <clearInput cellWidth="100%" inputValue="{{name}}"
+    inputHint="请输入银行卡名"
+    bind:inputListener='input'
+    id="name"/>
   </view>
-  <view class="container-item_bottom">
+
+  <view class="item between">
     <view class="container-item-btn" bindtap="cancel" >取消</view>
     <view class="container-item-btn" bindtap="confirm" data-status="btn_addBank_confirm">确定</view>
   </view>
 </view>
 
+<!--add bank from menu-->
+<view class="container" wx:if="{{showMenuAddBank}}">
+  
+  <view class="item-bottom">
+    <clearInput cellWidth="100%" inputValue="{{name}}" inputAlign="center"
+    inputHint="请输入银行卡名"
+    bind:inputListener='input' id="name"/>
+  </view>
+
+  <view class="item bold">
+    <view >选择账本:</view>
+  </view>
+
+  <picker-view class="birthday-picker" 
+  indicator-class="birthday-indicator" 
+  bindchange="bindChange"
+  id="records">
+    <picker-view-column>
+      <view wx:for="{{records}}" wx:key="*this">{{item}}</view>
+    </picker-view-column>
+  </picker-view>
+
+  <view class="item between">
+    <view class="container-item-btn" bindtap="cancel" >取消</view>
+    <view class="container-item-btn" bindtap="confirm" data-status="btn_addBank_menu_confirm">确定</view>
+  </view>
+</view>
 
 <!--del bank-->
 <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove"
@@ -212,12 +462,124 @@ wx:if="{{showDelBank}}"></view>
   <view class="modal-content">
     <view>确定删除这个卡以及相关所有帐单？</view>
   </view>
-
-
   <view class="modal-footer">
     <button size="mini" class="btn-modal" bindtap="cancel" data-status="cancel">取消</button>
     <button size="mini" class="btn-modal" bindtap="confirm" data-status="btn_delBank_confirm">确定</button>
   </view>
   
 </view>
+<!--add thing-->
+<view class="container" wx:if="{{showMenuAddThing}}">
+  <view class="start item-top">
+    <view>名称:</view>
+  </view>
+  <view class="item-bottom">
+    <clearInput cellWidth="100%" 
+    bind:inputListener='input' id="name" inputHint="必填项目"/>
+  </view>
 
+  <view class="item between">
+    <view>付款金额:</view>
+    <clearInput cellWidth="350rpx" 
+    inputHint="选填"
+    inputType="digit" 
+    bind:inputListener='input' id="toPay"/>
+  </view>
+
+  <view class="item bold">
+    <view >完成日期：</view>
+  </view>
+
+  <view >
+    <picker-view class="birthday-picker" indicator-class="birthday-indicator" value="{{val}}" bindchange="bindChange">
+      <picker-view-column>
+        <view wx:for="{{years}}" wx:key="*this">{{item}}年</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{months}}" wx:key="*this">{{item}}月</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{days}}" wx:key="*this">{{item}}日</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+
+  <view class="item end">
+    <checkbox-group bindchange="billCheck" id="payed">
+        <checkbox value="payed" checked="{{payed}}"/>
+    </checkbox-group>   
+    <view>完成</view>
+  </view>
+
+  <view class="start">MEMO:</view>
+  <view class="item-bottom">
+    <clearInput cellWidth="100%" 
+    bind:inputListener='input' id="memo" inputHint="选填项目"/>
+  </view> 
+  <view class="item between">
+    <view class="container-item-btn" bindtap="cancel" >取消</view>
+    <view class="container-item-btn" bindtap="confirm" data-status="btn_addThing_comfirm">确定</view>
+  </view>  
+
+</view>
+<!--edit thing-->
+<view class="container" wx:if="{{showEditThing}}">
+  <view class="start item-top">
+    <view>名称：</view>
+  </view>
+  <view class="item-bottom">
+    <clearInput cellWidth="100%" inputValue="{{name}}"
+    bind:inputListener='input' id="name" inputHint="必填"/>
+  </view>
+
+  <view class="item between">
+    <view>付款金额：</view>
+    <clearInput cellWidth="350rpx" inputValue="{{toPay}}" inputType="digit"
+  bind:inputListener='input' id="toPay" inputHint="选填"/>
+  </view>
+
+  <view class="item between">
+    <view class="between">
+      <view>付款日期：</view>
+      <view class="line" style="width:200rpx;font-Size:28rpx;" 
+      bindtap="onShowPickDay" id="todo">
+        {{year}}年{{month}}月{{day}}日
+      </view>
+    </view>
+    <view class="between">
+      <checkbox-group bindchange="billCheck" id="payed">
+        <checkbox value="payed" checked="{{payed}}"/>
+      </checkbox-group> 
+      <view>完成</view>
+    </view>
+  </view> 
+
+  <view class="birthday-box {{showPickDate?'birthday-show':''}}">
+    <view class="picker-header">
+      <view class="picker-btn" data-index="{{index}}" wx:for="{{picker_btn}}" wx:key="*this" bindtap="onPickerConfirm">{{item}}</view>
+    </view>   
+    <picker-view class="birthday-picker" indicator-class="birthday-indicator" value="{{val}}" bindchange="bindChange">
+      <picker-view-column>
+        <view wx:for="{{years}}" wx:key="*this">{{item}}年</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{months}}" wx:key="*this">{{item}}月</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{days}}" wx:key="*this">{{item}}日</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+
+  <view class="item-bottom">
+    <view >MEMO:</view>
+    <clearInput cellWidth="100%" inputValue="{{memo}}"
+    bind:inputListener='input' id="memo" inputHint="选填"/>
+  </view>
+
+  <view class="item between">
+    <view class="container-item-btn" bindtap="cancel" >取消</view>
+    <view class="container-item-btn long" bindtap="addToBill" >加入账单</view>
+    <view class="container-item-btn" bindtap="confirm" data-status="btn_editThing_comfirm">确定</view>
+  </view>  
+</view>
