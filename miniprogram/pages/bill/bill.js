@@ -26,7 +26,6 @@ Page({
     showThing2Bill:false,
     showAddBill:false,
     showEditBank:false,
-    showAddBank:false,
     showMenuAddBank:false,
     showMenuAddBill:false,
     showMenuAddThing:false,
@@ -84,7 +83,6 @@ Page({
         break;
       case "banks":
         let val_bank=this.data.val_bank_old;
-        console.log("check old bank val:",this.data.val_bank_old)
         if(val_bank<0)val_bank=0;
         if(this.data.val_record>=0){
           this.setData({
@@ -115,7 +113,7 @@ Page({
 
   },
   onPickerConfirm: function(e){
-    console.log("onPickerConfirm e:",e.currentTarget)
+    //console.log("onPickerConfirm e:",e.currentTarget)
     switch (e.target.id){
       case "records":
         if (e.currentTarget.dataset.index==0)//cancle
@@ -154,14 +152,14 @@ Page({
     switch (e.target.id){
       case "records":
         this.setData({val_record:e.detail.value[0]});
-        console.log("set val_record:",e.detail.value[0]);
+        //console.log("set val_record:",e.detail.value[0]);
         break;
       case "banks":
-        console.log("val_bank:",this.data.banks[e.detail.value[0]],e.detail.value[0]);
+        //console.log("val_bank:",this.data.banks[e.detail.value[0]],e.detail.value[0]);
         this.setData({val_bank:e.detail.value[0]});
         break;
       default://pick day or todo
-        console.log("bindChange pick day or todo:",e.detail.value);
+        //console.log("bindChange pick day or todo:",e.detail.value);
         this.setData({val:e.detail.value});
         break;
     }
@@ -171,8 +169,8 @@ Page({
    * Lifecycle function--Called when page load
    */
   onLoad: function (options) {
-    console.log("onload options.id:",options.id);
-    console.log("onload options:",options);
+    //console.log("onload options.id:",options.id);
+    //console.log("onload options:",options);
     
     let ret='';
     let time='';
@@ -188,8 +186,8 @@ Page({
       records_key.push(data.key);
       records.push(data.name_record);
     });
-    console.log("records:",records,records_key);
-    console.log("allDataInfo:",dataInfo);
+    //console.log("records:",records,records_key);
+    //console.log("allDataInfo:",dataInfo);
 
 
 
@@ -234,6 +232,8 @@ Page({
       case "MenuAddBank":
       case "MenuAddBill":
         let isMenuAddBill=options.show=="MenuAddBill";
+        let month_start=new Date().getMonth()+1;
+        let day_start=21;
         this.setData({
           allDataInfo:dataInfo,
           banks:dataInfo[0].bankNames,
@@ -242,7 +242,9 @@ Page({
           showMenuAddBill:isMenuAddBill?true:false,
           flag:isMenuAddBill?'btn_menuAddBill_confirm':'btn_menuAddBank_confirm',
           showMenuAddBank:isMenuAddBill?false:true,
-          val:[6,15]
+          val:[month_start-1,day_start-1],
+          month:month_start,
+          day:day_start
         });
         break;     
       case "EditBill":
@@ -258,7 +260,7 @@ Page({
         let bankList=ti.banks;
 
 
-        console.log("editbill recordIdx:",recordIdx,bankIdx);
+        //console.log("editbill recordIdx:",recordIdx,bankIdx);
         this.setData({
           allDataInfo:dataInfo,
           banks:bankList,//to change
@@ -299,16 +301,6 @@ Page({
           flag:'btn_addBill_confirm'
         });
         break;
-      /*case "AddBank":
-        time=ret[0].split('_');
-        this.setData({
-          showAddBank:true,
-          id:options.id,
-          title_year:time[0],
-          title_month:time[1],
-          flag:'btn_addBank_confirm'
-        });       
-        break;*/
       case "EditBank":
         time=ret[1].split('_');
         this.setData({
@@ -335,11 +327,11 @@ Page({
           let clientHeight = res.windowHeight,
               clientWidth = res.windowWidth,
               rpxR = 750 / clientWidth;
-              console.log("clientHeight:",clientHeight,", clientWidth:",clientWidth, clientHeight * rpxR);
+              //console.log("clientHeight:",clientHeight,", clientWidth:",clientWidth, clientHeight * rpxR);
           that.setData({
               winHeight: clientHeight * rpxR-50, //50 is the tab height
           });
-          console.log("winHeight:",clientHeight * rpxR-50)
+          //console.log("winHeight:",clientHeight * rpxR-50)
       }
   });
   },
@@ -380,7 +372,7 @@ Page({
 
   input:function(e){
     this.data[e.target.id]=e.detail.value;
-    console.log('input e.target.id:',e.target.id,', value:',e.detail.value)
+    //console.log('input e.target.id:',e.target.id,', value:',e.detail.value)
   },
   showBillToast:function(pTitle, pIcon){
     if(pIcon!=''){
@@ -414,7 +406,7 @@ Page({
     if(this.data.toPay==''||isNaN(this.data.toPay)){
       this.data.toPay=0;
     }
-    console.log('date val:',this.data.val);
+    //console.log('date val:',this.data.val);
 
     if(this.data.val.length==2)
       this.data.date=months[this.data.val[0]]+'/'+days[this.data.val[1]];
@@ -473,7 +465,7 @@ Page({
     let pFlag=e.currentTarget.dataset.status;
     let billNames=[];
     let retData;
-    console.log("confirm flag:",pFlag)
+    //console.log("confirm flag:",pFlag)
     switch(pFlag){
       case 'btn_editThing_comfirm':
         if(this.data.id==this.data.name){//no change name
@@ -503,8 +495,8 @@ Page({
       case 'btn_editBill_confirm':
         let name_bill_ori=ret[0];
         let name_bank_new=this.data.banks[this.data.val_bank];
-        console.log("btn_editBill_confirm name_bank_new:",name_bank_new);
-        console.log("btn_editBill_confirm recordid:",ret[2]);
+        //console.log("btn_editBill_confirm name_bank_new:",name_bank_new);
+        //console.log("btn_editBill_confirm recordid:",ret[2]);
         
         if(this.data.name==name_bill_ori ){
           if(this.data.name_bank!=name_bank_new)
@@ -513,7 +505,7 @@ Page({
             else
               this.data.id=this.data.name+'-'+name_bank_new+'-'+ret[2];
           retData=this.createReturnData();
-          console.log("check retData:",retData);
+          //console.log("check retData:",retData);
           break;
         }          
         
@@ -530,7 +522,7 @@ Page({
         }
         break;
       case 'btn_addBill_menu_confirm':
-        console.log('btn_addBill_menu_confirm val_record:',this.data.val_record);
+        //console.log('btn_addBill_menu_confirm val_record:',this.data.val_record);
         if(this.data.val_record==-1){
           this.showBillToast('请选择账本','warn');
           return;
@@ -559,12 +551,12 @@ Page({
           if(e.name_bank==c_bank)
           billNames=e.name_bill//get all the bill name of this bank
         }*/
-        console.log("check billNames:", billNames);
+        //console.log("check billNames:", billNames);
         
       case 'btn_addBill_confirm':
         if(pFlag=='btn_addBill_confirm')
           billNames=updateBank.bills.map(function(bill){return bill.name});
-        console.log('----target---',billNames);
+        //console.log('----target---',billNames);
         //check if duplicated if not
         if(!this.checkNameDuplicated(this.data.name,billNames,false)){
           //create id by name
@@ -602,7 +594,7 @@ Page({
         }
         break;
     }
-    console.log("retData:",retData);
+    //console.log("retData:",retData);
     wx.navigateBack({complete:function(){
       if(showEditBill || this.data.showThing2Bill)
         prv.editBillDone(retData,pFlag);
@@ -614,8 +606,6 @@ Page({
         prv.addThingDone(retData,pFlag);
       if(this.data.showEditThing)
         prv.editThingDone(retData,pFlag);
-      if(this.data.showAddBank)
-        prv.addBankDone(retData,pFlag);
       if(this.data.showMenuAddBill)
         prv.addBillFromMenuDone(retData,pFlag);
       if(this.data.showMenuAddBank)
@@ -628,7 +618,6 @@ Page({
     wx.navigateBack();
   },
   hideModal:function(){
-    console.log("hideModel---");
     this.setData({
       showDelBank:false,
       showPickDay:false,
@@ -658,7 +647,7 @@ Page({
    * Lifecycle function--Called when page show
    */
   onShow: function () {
-    console.log('onShow');
+    //console.log('onShow');
   },
 
   /**

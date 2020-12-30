@@ -27,7 +27,6 @@ Page({
         showDatePicker: false,
         showDuplicateInfo: false,
         showTop: false,
-        showLast: false,
 
         todo:[],//page_todo
         todo_sample:[],
@@ -107,14 +106,14 @@ Page({
 
     bindChange: function (e) {
         //记录改变后的日期
-        console.log('bindChange:',e.detail.value);
+        //console.log('bindChange:',e.detail.value);
         this.setData({value:e.detail.value});
     },
 
     refresh: function(e){
         var self = this;
         setTimeout(function(){
-          console.log('下拉刷新');
+          //console.log('下拉刷新');
           var date = new Date();
           self.setData({
             currentPage: 1,
@@ -141,24 +140,13 @@ Page({
         let cur = e.currentTarget.dataset.current
         if (this.data.currentTab == cur) {
             //tab same tab
-            console.log("hello")
-            //console.log("id:",e.currentTarget.id)
-            /*switch(e.currentTarget.id){
-                case "add_thing":
-
-                    break;
-                case "add_br":
-                    this.util(e.currentTarget.dataset.statu);
-                default:
-                    break;
-                //
-            }*/
+            //console.log("hello")
             
         } else {
             this.setData({
                 currentTab: cur
             })
-            console.log("set currentTab:",this.data.currentTab)
+            //console.log("set currentTab:",this.data.currentTab)
         }
     },
     //create name from key
@@ -211,9 +199,9 @@ Page({
     updateAllData: function(pData){
         let i=-1;
         for(const [index, data] of this.data.allData.entries()){
-            console.log("check index:",index,data);
+            //console.log("check index:",index,data);
             if(data.key==pData.key){
-                console.log("find it:",index);
+                //console.log("find it:",index);
                 i=index;
                 break;
             }
@@ -226,55 +214,21 @@ Page({
     //msg:add_btm, next, init, null for init,delete
     updateUIAll: function(msg, pData) {
         
-        console.log("updateUIAll msg:", msg);
-        console.log("updateUIAll pData:", pData);
-        console.log("updateUIAll check allData:", this.data.allData);
-        console.log("updateUIAll check all:", this.data.all);
         let that = this;
         let newAll = [];
-        console.log("UI delete check rest allDataInfo bf:",that.data.allDataInfo);
         if (msg == "delete") {
-            
-            
-            //console.log('updateUIAll delete----');
             newAll = newAll.concat(this.data.all);
-            //console.log("newAll bf:",newAll);
-            //console.log('check data_index:',pData.data_index)
-            //todo: check pData.data_index???
             if(pData.data_index>=0){
-            newAll.splice(pData.data_index, 1);
+                newAll.splice(pData.data_index, 1);
             }
-            //todo: update that.data.keys
-            /*for(const[i,k] of that.data.keys.entries()){
-                if (k==pData.key){
-                    that.data.keys.splice(i,1);
-                    that.data.allDataInfo.splice(i,1);
-                    that.data.allData.splice(i,1);
-                    break;
-                }
-            }*/
-
-            /*
-            for(let i=0;i<that.data.keys.length;i++){
-                if(that.data.keys[i].key==pData.key){
-                    //console.log('found key:',that.data.keys[i]);
-                    that.data.keys.splice(i,1);
-                }
-            }*/
-
             
             that.setData({
                 all: newAll
             });
-            //console.log("UI delete check rest keys:",that.data.keys);
-            //console.log("UI delete check rest allDataInfo af:",that.data.allDataInfo);
-            //console.log("UI delete check rest allData:",that.data.allData);
 
             if(that.data.keys.length==0){
-                console.log('2 load new sample for current month');
                 that.createSample();
             }else if(newAll.length==0){
-                console.log('2 load current month');
                 that.loadMore('this',null,'init');
             }
             return;
@@ -295,29 +249,19 @@ Page({
                     break;
                 case 'update':
                     newAll = [];
-                    
                     newAll = newAll.concat(that.data.all);
                     newAll[up_all_idx] = pData;
-                    //todo check up_all_idx
-                    console.log("newAll:",newAll,up_all_idx);
-                    console.log("updateUIAll update:",pData);
-                    //that.updateAllData(pData);
                     break;
                 case 'update_allData':
                     //add before or add bottom
                     newAll = [{key:pData.key, 
                         name:pData.name,
                         banks:pData.banks}];
-                    console.log('update_allData newAll data:',newAll);
-                    //newAll = newAll.concat(that.data.all);
-                    //that.data.allData[up_all_idx]=pData.banks;
-                    //that.loadMore('key',pData.key,'init');
                     break;
                 case 'add_top': 
                     newAll = [];
                     newAll[0] = pData;
                     newAll = newAll.concat(that.data.all);
-                    console.log("add top newAll:", newAll);
                     break;
             }
             that.setData({
@@ -325,28 +269,11 @@ Page({
                 updateBank: {},
                 currentTab:0
             });
-            console.log("check newAll:",newAll);
-            console.log("UI delete check rest allDataInfo af:",that.data.allDataInfo);
-        });
-
-    },
-    saveAndReadFile: function(pFilePath) {
-        console.log("saveAndReadFile IN:", pFilePath);
-        let fsm = wx.getFileSystemManager();
-        wx.saveFile({
-            tempFilePath: pFilePath,
-            success: function(res) {
-                console.log("saveFile success:", res.savedFilePath); 
-                fsm.readFile({   filePath: res.savedFilePath,   encoding: 'utf8',   success: function(res) {    console.log("read file:", res.data)   }  });
-            },
-            fail: function(res) {
-                console.log("saveFile fail:", res);
-            },
         });
     },
     //save storage and get new saved storage
     saveDataByKey: function(pKey, pBanks) {
-        //.log('saveDataByKey start:',pKey, pBanks);
+        //console.log('saveDataByKey start:',pKey, pBanks);
         let that=this;
         return new Promise(function(resolve, reject) {
             if (pBanks.length == 0) {
@@ -354,7 +281,7 @@ Page({
                 wx.removeStorage({
                     key: pKey,
                     success: (result) => {
-                        console.log("saveDataByKey delete by key----");
+                        //console.log("saveDataByKey delete by key----:",result);
                         that.loadKeys().then(function() {
                             resolve(null);
                         });
@@ -367,7 +294,6 @@ Page({
                     data: pBanks,
                     success: function(res) {
                         that.loadKeys().then(function() {
-                            console.log('loadkeys end-----allData:',that.data.allData);
                             //update all 
                             wx.getStorage({
                                 key: pKey,
@@ -380,27 +306,20 @@ Page({
                             });
                         });
                     }
-
                 });
             }
-            
-
         });
-
     },
     
     //get storage, wx.getStorage
     getDataByKey: function(pKey) {
-        console.log('getDataByKey:',pKey);
         return new Promise(function(resolve, reject) {
             wx.getStorage({
                 key: pKey,
                 success: function(result) {
-                    console.log("getDataByKey success:",result.data);
                     resolve(result.data);
                 },
                 fail: (err) => {
-                    console.log("getDataByKey err:",err);
                     resolve(err);
                 },
                 complete: () => {}
@@ -459,7 +378,7 @@ Page({
                             id:"帐单1（点击更改，滑动删除）-银行卡1（点击更改）-"+key,
                             name: '帐单1（点击更改，滑动删除）',
                             toPay: 100,
-                            date: '11/11',
+                            date: month+'/15',
                             payed: false
                         },]
                     }
@@ -496,7 +415,7 @@ Page({
         //if pKey < pKey_by, create from next bank
             //the bank to create is last,msg to pass is last
         if(that.compareKeys(pKey,pKey_by))msg='last';
-        console.log('createDataFrom:',pKey,' by key:',pKey_by,' with msg:',msg)
+        //console.log('createDataFrom:',pKey,' by key:',pKey_by,' with msg:',msg)
         return new Promise(function(resolve, reject) {
             that.getDataByKey(pKey_by).then(function(banks) {
                     //the bank to create is next, set next
@@ -543,7 +462,7 @@ Page({
     //return the key before or after
     //msg: last or next
     getKeyBeforeAfter: function(msg, pKey){
-        console.log("getKeyBeforeAfter msg:",msg,", key:",pKey);
+        //console.log("getKeyBeforeAfter msg:",msg,", key:",pKey);
         let that=this;
         let year=pKey.split('_')[0];
         let month=pKey.split('_')[1];
@@ -560,7 +479,7 @@ Page({
                     let k=new Date(e.key.split('_')[0]+'/'+e.key.split('_')[1]+'/1');
                     if (k<t){
                         idx=i;
-                        console.log("find last of ",pKey," is ",k);
+                        //console.log("find last of ",pKey," is ",k);
                         break;
                     }
                 }
@@ -589,11 +508,8 @@ Page({
         }
         
         if (idx<0){
-            console.log('to return null idx is:',idx);
             return null;
         }else{
-            console.log("return idx=",idx);
-            console.log("return key:",that.data.keys[idx]);
             return that.data.keys[idx].key;
         }
         
@@ -701,19 +617,20 @@ Page({
     },
 
     loadTodo_sample: function(){
-        console.log("todo load todo sample");
+        //console.log("todo load todo sample");
+        let date=new Date();
         let things=[{
-            id:"发红包",
-            name: '发红包',
+            id:"预定事项一",
+            name: '预定事项一',
             toPay: 100,
-            date: '11/11',
+            date: date.getFullYear()+'/'+(date.getMonth()+1)+'/15',
             payed: false,
             memo:''
         },{
-            id:"理发",
-            name: '理发',
+            id:"预定事项二",
+            name: '预定事项二',
             toPay: 300,
-            date: '11/11',
+            date: date.getFullYear()+'/'+(date.getMonth()+1)+'/15',
             payed: false,
             memo:''
         }]
@@ -730,9 +647,11 @@ Page({
             wx.getStorageInfo({
                 success: (result) => {
                     //console.log("rt:",result.keys);
-                    if(result.keys.length==0){//initial first time
+                    if(result.keys.length==0 |(result.keys.length==1 && result.keys[0]=='todo')){
+                        //initial first time
                         that.createSample();
                     }else{
+                    
                         //console.log("sort keys:",result.keys)
                         let keys=[];
                         that.data.allData=[];
@@ -765,7 +684,7 @@ Page({
                         keys[0].key_next=that.getKeyOf('next',keys[0].key);
                         keys[0].name_next=that.createNameByKey(keys[0].key_next);
     
-                        console.log("----tmp:",keys);
+                        //console.log("----tmp:",keys);
                         that.setData({keys:keys});
                         //get all the record onload
                         keys.forEach(function(data_keys){
@@ -790,15 +709,15 @@ Page({
                                     
     
                                 });
-                                console.log("keys:",that.data.keys);
-                                console.log("allData:",that.data.allData);
-                                console.log("allDataInfo:",that.data.allDataInfo);
+                                //console.log("keys:",that.data.keys);
+                                //console.log("allData:",that.data.allData);
+                                //console.log("allDataInfo:",that.data.allDataInfo);
                                 //console.log("all:",that.data.all);
                             });
                         });
                         resolve();
-                    }
                     
+                    }
                 },
                 fail: () => {},
                 complete: () => {}
@@ -812,7 +731,7 @@ Page({
         wx.getStorage({
             key: 'todo',
             success: function(result) {
-                console.log("get todos:",result)
+                //console.log("get todos:",result)
                 ret=result.data;
             },
             fail: () => {console.log("fail?");},
@@ -822,7 +741,7 @@ Page({
                 }else{
                     
                     this.setData({todo:ret})
-                    console.log("check todo:",this.data.todo)
+                    //console.log("check todo:",this.data.todo)
                 }
 
             }
@@ -840,7 +759,7 @@ Page({
                 let clientHeight = res.windowHeight,
                     clientWidth = res.windowWidth,
                     rpxR = 750 / clientWidth;
-                    console.log("clientHeight:",clientHeight,", clientWidth:",clientWidth, clientHeight * rpxR);
+                    //console.log("clientHeight:",clientHeight,", clientWidth:",clientWidth, clientHeight * rpxR);
                 that.setData({
                     winHeight: clientHeight * rpxR-50, //50 is the tab height
                     value:[year_now-year_start,month_now-1]
@@ -848,7 +767,7 @@ Page({
             }
         });
         
-        //console.log('onload this.data.value:',this.data.value);
+        //console.log('onload this.data.year:',this.data.year);
         that.loadKeys().then(function() {
             that.loadTodo();
             that.loadMore('this',null,'init');            
@@ -884,7 +803,6 @@ Page({
         let key_cur=this.getCurrentKey();
         this.data.keys.some(function(value){
             if(value.key==key_cur){
-                console.log('found!');
                 found=true;
                 return true;
             }
@@ -897,7 +815,6 @@ Page({
         this.hideModal();
     },
     //load next exist month
-    //todo check
     onShowNext: function() {
        // this.setData({currentTab:0});
         let key_next=this.getKeyBeforeAfter('next',this.data.all[0].key);
@@ -906,13 +823,6 @@ Page({
         }else{
             this.showToast('到顶了', 'warn');
         }
-        this.hideModal();
-    },
-    //todo check this
-    onShowLast: function() {
-        console.log('onShowLast!!!! to del!')
-        //todo load last of current last record
-        //this.loadMore('last',todo,'add_btm');
         this.hideModal();
     },
 
@@ -925,7 +835,6 @@ Page({
     onReachBottom: function() {
         if(this.data.currentTab==0){
             let key = this.data.all[this.data.all.length - 1].key;
-            console.log('onReachBottom cur key:',key);
             let key_last=this.getKeyBeforeAfter('last', key);
             if(key_last){
                 this.loadMore('key',key_last,'add_btm');
@@ -965,14 +874,12 @@ Page({
         */
     },
     hideModal: function() {
-        console.log("hideModal--");
         this.setData({
             showModalStatus: false,
             showDelConfirm: false,
             showDatePicker: false,
             showDuplicateInfo: false,
             showTop: false,
-            showLast: false,
             updateBank: {}
         });
     },
@@ -981,11 +888,11 @@ Page({
         this.setData({value:this.data.value_saved});
     },
     onConfirm: function(e) {
-        console.log("onConfirm status:", e.currentTarget.dataset.status);
+        //console.log("onConfirm status:", e.currentTarget.dataset.status);
         
         switch (e.currentTarget.dataset.status) {
             case 'btn_duplicate_confirm':
-                console.log('btn_duplicate_confirm:',this.data.updateBank);
+                //console.log('btn_duplicate_confirm:',this.data.updateBank);
                 this.loadMore('key',this.data.updateBank.key,'init');
                 this.setData({
                     showDuplicateInfo:false,
@@ -1006,14 +913,14 @@ Page({
         this.createUpdateBank(result[0], result[1], result[2], 'delBill');
     },
     billPay: function(e){
-        console.log('billPay check all:',this.data.all)
+        //console.log('billPay check all:',this.data.all)
         let result = e.currentTarget.id.split('-');
         this.createUpdateBank(result[0], result[1], result[2], 'payBill');
     },
     //delete data
     deleteRecord: function(e) {
         this.setData({ showDelConfirm: true });
-        console.log("deleteRecord target id:",e.currentTarget.id);
+        //console.log("deleteRecord target id:",e.currentTarget.id);
         this.createUpdateBank(null, null, e.currentTarget.id, 'delData');
     },
     selectRecord: function(e){
@@ -1022,7 +929,7 @@ Page({
     },
     //insert a record to all(ui) descend
     insertUIRecord(pRecord){
-        console.log("the record to insert:",pRecord);
+        //console.log("the record to insert:",pRecord);
         let ret=[];//the new all
         let date_p=pRecord.key.split('_');
         let idx=-1;
@@ -1086,13 +993,13 @@ Page({
     },
     //update updateBank to all, set storage, get storage to all
     updataStorage: function(btn_status, updateBank2 = null) {
-        console.log("updataStorage btn_status:", btn_status);
-        console.log("updataStorage updateBank2:", updateBank2);//todo same bill add from things
+        //console.log("updataStorage btn_status:", btn_status);
+        //console.log("updataStorage updateBank2:", updateBank2);//todo same bill add from things
         
         let that = this;
         let updateBank = that.data.updateBank;
         //if (updateBank2)updateBank=updateBank2
-        console.log("updataStorage updateBank bf:", updateBank);
+        //console.log("updataStorage updateBank bf:", updateBank);
         let up_all_idx = updateBank.data_index;
         let up_bank_idx = updateBank.bank_index;
         let up_bill_idx = updateBank.bill_index;
@@ -1113,7 +1020,7 @@ Page({
                 banks=toUpdateAll.banks;
                 banks[up_bank_idx].bills=updateBank2.bills;
                 //change=false;
-                console.log('load_updateBill-----banks:',banks,toUpdateAll);
+                //console.log('load_updateBill-----banks:',banks,toUpdateAll);
                 break;
             case 'upBank':
                 banks = banks.concat(toUpdateAll.banks);
@@ -1146,7 +1053,7 @@ Page({
                     toUpdateAll = that.data.all[up_all_idx2];
                     banks = banks.concat(toUpdateAll.banks);
                     banks[up_bank_idx2] = updateBank2;
-                    console.log('updataStorage check banks:',banks);
+                    //console.log('updataStorage check banks:',banks);
                     if(!that.isEmpty(updateBank))
                         banks[up_bank_idx].bills.splice(up_bill_idx,1);
                         toast = '账单移动';
@@ -1159,10 +1066,10 @@ Page({
                     change = that.checkBillChange(toUpdateAll.banks[up_bank_idx].bills[up_bill_idx], updateBank.bills[up_bill_idx]);
                 }
                 if (!change) {
-                    console.log("no change");
+                    //console.log("no change");
                     that.showToast('无更改', 'warn'); //warn is not support yet
                 } else if(!updateBank2){
-                    console.log("have some change - update bill content");
+                    //console.log("have some change - update bill content");
                     banks = banks.concat(toUpdateAll.banks);
                     //sort updateBank bills by date
                     updateBank=that.sortBills(updateBank,true);
@@ -1175,16 +1082,12 @@ Page({
                     }else{
                         toast = '成功更新账单';
                     }
-                    console.log('changed:',banks[up_bank_idx],up_bank_idx)
+                    //console.log('changed:',banks[up_bank_idx],up_bank_idx)
                 }
                 break;
             case 'btn_addBill_menu_confirm':
             case 'btn_addBill_confirm':
-                //console.log("updataStorage banks_ori bf:",toUpdateAll.banks[up_bank_idx].bills);
-                console.log("updataStorage btn_addBill_confirm");
                 banks = banks.concat(toUpdateAll.banks);
-                console.log("banks:",banks);
-                console.log("toUpdateAll.key:",toUpdateAll.key);
                 //sort updateBank bills by date
                 updateBank=that.sortBills(updateBank,true);
                 banks[up_bank_idx] = updateBank;
@@ -1193,7 +1096,7 @@ Page({
                 break;
 
             case 'btn_delBill_confirm':
-                console.log("updataStorage btn_delBill_confirm, allData:",this.data.allData);
+                //console.log("updataStorage btn_delBill_confirm, allData:",this.data.allData);
                 updateBank.bills.splice(up_bill_idx, 1);
                 banks = banks.concat(toUpdateAll.banks);
                 banks[up_bank_idx] = updateBank;
@@ -1202,12 +1105,9 @@ Page({
                 break;
             case 'btn_addBank_menu_confirm':
             case 'btn_addBank_confirm':
-                console.log("updataStorage btn_addBank_confirm");
                 banks = banks.concat(toUpdateAll.banks);
                 banks[up_bank_idx] = updateBank;
                 toast = '成功添加银行';
-                console.log("btn_addBank_menu_confirm:",toUpdateAll.key, banks);
-                
                 break;
             case 'btn_editBank_confirm':
                 //console.log("updataStorage btn_editBank_confirm");
@@ -1218,7 +1118,7 @@ Page({
                 } else {
                     banks = banks.concat(toUpdateAll.banks);
                     banks[up_bank_idx] = updateBank;
-                    console.log("btn_editBank_confirm banks:", banks);
+                    //console.log("btn_editBank_confirm banks:", banks);
                     toast = '成功改名';
                 }
                 break;
@@ -1233,17 +1133,17 @@ Page({
                 that.hideModal();
                 //toUpdateAll = { key: updateBank.data_key };
                 toUpdateAll = { key: updateBank.key };
-                console.log("btn_delData_confirm toUpdateAll");
+                //console.log("btn_delData_confirm toUpdateAll");
                 break;
         }
 
         //save data and get data
         //console.log(banks);
         if (change) {
-            console.log("change:",toUpdateAll.key, banks);
+            //console.log("change:",toUpdateAll.key, banks);
             that.saveDataByKey(toUpdateAll.key, banks).then(function(data_get) {
-                console.log("---after saveDataByKey---allData:",that.data.allData);
-                console.log("---after saveDataByKey---all:",that.data.all);
+                //console.log("---after saveDataByKey---allData:",that.data.allData);
+                //console.log("---after saveDataByKey---all:",that.data.all);
                 that.showToast(toast, 'success');
                 if (data_get) {
                     let update_All = {
@@ -1255,7 +1155,7 @@ Page({
                         bill_index: up_bill_idx
                     }
                     if(btn_status=="load_updateBill"){
-                        console.log("btn status is load_updateBill");
+                        //console.log("btn status is load_updateBill");
                         that.updateUIAll('update_allData', update_All);
                     }else{
                         that.updateUIAll('update', update_All);
@@ -1271,8 +1171,6 @@ Page({
                     console.log("never happen?");
                     //check no need this
                     that.updateUIAll('delete', update_All);
-                    
-
                 }
             });
         }
@@ -1290,17 +1188,6 @@ Page({
     addData: function(){
         this.setData({showDatePicker:true});
         this.data.value_saved = this.data.value;// 记录改变前的日期
-    },
-    //add bank
-    addBank: function(e) {
-        console.log("addBank e:",e);
-        this.createUpdateBank(null, null, e.currentTarget.id, e.currentTarget.dataset.status);
-    },
-    //todo: check need
-    addBankDone: function(pData, pStatus) {
-        this.data.updateBank.name = pData.name;
-        this.data.updateBank.id = pData.id;
-        this.updataStorage(pStatus);
     },
     //rename bank, create updateBank
     bankEdit: function(e) {
@@ -1329,11 +1216,11 @@ Page({
         let id_bank=pBank.id;
         let name_bank=pBank.name;
         //get bills of this bank
-        console.log("allData:",this.data.allData);
+        //console.log("allData:",this.data.allData);
         let allData_index=-1;
         let bank_index=-1;
         let record_key=pBank.id.split('-')[1];
-        console.log("record_key:",record_key);
+        //console.log("record_key:",record_key);
 
         for (const [i, records] of this.data.allData.entries()) {
             if(records.key==record_key){
@@ -1345,7 +1232,7 @@ Page({
         //add record to all
         let record=this.data.allData[allData_index];
         let data_index=this.insertUIRecord(record,false);
-        console.log("check new all:",this.data.all);
+        //console.log("check new all:",this.data.all);
         let updateBank={
             id:id_bank,
             name:name_bank,
@@ -1363,7 +1250,7 @@ Page({
     },
     //add bill to exist bank and create updateBank
     addBillFromMenuDone: function(pBill, pStatus) {
-        console.log("addBillFromMenuDone pBill:",pBill,pStatus);
+        //console.log("addBillFromMenuDone pBill:",pBill,pStatus);
         //create updateBank
         let allData_index=-1;
         let data_index=-1;
@@ -1379,7 +1266,7 @@ Page({
                         id_bank=bank.id;
                         bank_index=j;
                         bills=bank.bills.concat(pBill);
-                        console.log("check bills:",bills);
+                        //console.log("check bills:",bills);
                         break dance;
                     }
                 }
@@ -1388,7 +1275,7 @@ Page({
         //add record to all
         let record=this.data.allData[allData_index];
         data_index=this.insertUIRecord(record,false);
-        console.log("check new all:",this.data.all);
+        //console.log("check new all:",this.data.all);
 
         let updateBank={
             id:id_bank,
@@ -1401,8 +1288,8 @@ Page({
         this.updataStorage(pStatus);
     },
     createBillsForBankInRecord(pDataRange,pBill){
-        console.log('check pBill:',pBill);
-        console.log('check pDataRange:',pDataRange);
+        //console.log('check pBill:',pBill);
+        //console.log('check pDataRange:',pDataRange);
         let id_record=pBill.id.split('-')[2];//the new id of record
         let bank_idx=-1;
         let data_idx=-1;
@@ -1417,12 +1304,12 @@ Page({
                 for(const[j,bank] of record.banks.entries()){
                     
                     if(bank.name==pBill.name_bank){
-                        console.log('-bank name:',bank.name);
+                        //console.log('-bank name:',bank.name);
                         bank_idx=j;
                         for(let bill of bank.bills){
                             if(bill.name==pBill.name){
                                 //exist already todo load exist record 
-                                console.log("this bill exist already!");
+                                //console.log("this bill exist already!");
                                 break dance;
                             }
                         }
@@ -1444,7 +1331,7 @@ Page({
                                 let date_b=year_b+'/'+pBill.date;
                                 if(ret_date.length==3)
                                     date_b=pBill.date
-                                console.log("date_b:",date_b)
+                                //console.log("date_b:",date_b)
                                 let a=new Date(date_a);//ori
                                 let b=new Date(date_b);//new
                                 if(a<=b){
@@ -1500,20 +1387,19 @@ Page({
             updateBank:new_updateBank,
             showDuplicateInfo:true
         });
-        console.log('thing add to exist bill:',new_updateBank);
+        //console.log('thing add to exist bill:',new_updateBank);
         
     },
     editBillDone: function(data, status) {
-        console.log("editBillDone data:", data);
+        //console.log("editBillDone data:", data);
         let isBill=data.date.split('/').length==2;
         if(this.data.updateBank.name==data.name_bank && isBill){
             //update current record-bank
-            console.log('just update bill');
             this.data.updateBank.bills[this.data.updateBank.bill_index] = data;
             this.updataStorage(status);
         }else{
             //check if edit exist record
-            console.log("todo, recreate updatebank2:",this.data.updateBank);
+            //console.log("todo, recreate updatebank2:",this.data.updateBank);
             let ret=data.id.split('-');
             
             let data_update={
@@ -1537,9 +1423,9 @@ Page({
             let exist_in_ui=true;
             //find bank index
             if(data_idx<0){//check allData
-                console.log("not exist in ui, check allData")
+                //console.log("not exist in ui, check allData")
                 ret_info=this.createBillsForBankInRecord(this.data.allData,data);
-                console.log('ret_info:',ret_info);
+                //console.log('ret_info:',ret_info);
                 bank_idx=ret_info.idx_bank;
                 data_idx=ret_info.idx_data;
                 bill_idx=ret_info.idx_bill;
@@ -1551,19 +1437,10 @@ Page({
                 }
             }
             
-            //console.log('that.data.allData:',this.data.allData);
-            console.log('all:',this.data.all);
-            console.log('data_idx:',data_idx,bank_idx,bill_idx);
-            console.log('old updateBank:',this.data.updateBank);
-
             data_update.bills=bills_new;
             data_update.bank_index=bank_idx;
             data_update.data_index=data_idx;
             data_update.bill_index=bill_idx;
-            //todo delete origial bill in the bank
-            //this.updataStorage('btn_delBill_confirm');
-            console.log("check data_update:",data_update);
-            //this.updataStorage('btn_editBill_confirm',data_update);
             
             if(exist_in_ui){
                 //add bill to new bank and del the old one
@@ -1575,51 +1452,36 @@ Page({
                 
             }else{
                 //add bill to new bank and del the old one
-                
-                
-                console.log('mark2');
                 this.updataStorage('load_updateBill',data_update);
-                //this.updataStorage('btn_delBill_confirm');
-                
-                
             }
 
         }
-            
-        //this.updataStorage(status);
-        
     },
 
     navigateToBill: function(pKeys) {
         wx.navigateTo({
             url: '../bill/bill?' + pKeys,
             success: function(res) {
-                console.log("navigateTo success");
+                //console.log("navigateTo success");
             },
             fail: function() {
                 //fail
             },
             complete: function() {
-                console.log("navigateTo complete");
+                //console.log("navigateTo complete");
             }
         });
     },
     //change item, create updateBank
     itemEdit: function(e) {
-        console.log("itemEdit:", e.currentTarget.id);
         var result = e.currentTarget.id.split('-');
-        //this.createUpdateBank(result[0],result[1],result[2]);
         this.createUpdateBank(result[0], result[1], result[2], e.currentTarget.dataset.status);
-
     },
     addThing: function(e){
-        
         this.navigateToBill('show=MenuAddThing&title=添加TODO');
     },
     addThingDone: function(pData, pStatus){
-        console.log('addThingDone----',pData, pStatus);
         let that=this;
-        //todo 
         let data2add={
             id: pData.id,
             name: pData.name,
@@ -1649,7 +1511,7 @@ Page({
 
                 if(!add && +date_t>=+date_a){
                     todo_update.push(data2add);
-                    console.log('-:',t,data2add)
+                    //console.log('-:',t,data2add)
                     add=true;
                 }
                 todo_update.push(t);
@@ -1660,7 +1522,7 @@ Page({
             todo_finished.push(data2add);
         }
         todo_update=todo_update.concat(todo_finished.reverse());
-        console.log('check new todo before update:',todo_update);
+        //console.log('check new todo before update:',todo_update);
         
         
         that.saveDataByKey('todo',todo_update).then(function(things){
@@ -1720,18 +1582,14 @@ Page({
         this.navigateToBill('show=EditThing&title=更改TODO&id='+e.currentTarget.id+'&date='+date+'&memo='+memo+'&payed='+payed+'&toPay='+toPay);
     },
     editThingDone: function(pData, pStatus){
-        console.log('editThingDone-----:',pData,pStatus);
+        //console.log('editThingDone-----:',pData,pStatus);
         let that=this;
         let change=true;
-        //todo save updated data
         var todo_update=[]
         for(let td of this.data.todo){
             if (td.id==pData.id){
                 //check if changed
                 change=that.checkBillChange(td,pData);
-                console.log("td:",td);
-                console.log("pData:",pData);
-                console.log("change:",change);
                 if(change){
                     todo_update.push({
                         id: pData.name,//update id to name
@@ -1749,7 +1607,6 @@ Page({
                 todo_update.push(td);
             }
         }
-        console.log("todo_update:",change);
         if(change){
             that.saveDataByKey('todo',todo_update).then(function(things){
                 //console.log("check things:",things)
@@ -1786,14 +1643,14 @@ Page({
         let bank2up = {};
         
         let allData = that.data.all;
-        console.log('createUpdateBank_bills:',pBank_name+'-'+pAll_key);
+        //console.log('createUpdateBank_bills:',pBank_name+'-'+pAll_key);
         if(pFlag=='MenuAddBill')allData=that.data.allData;
 
         for (let i = 0; i < allData.length; i++) {
             if (allData[i].key == pAll_key) {
                 for (let j = 0; j < allData[i].banks.length; j++) {
-                    console.log("compare:",allData[i].banks[j].id);
-                    console.log("with:",pBank_name+'-'+pAll_key);
+                    //console.log("compare:",allData[i].banks[j].id);
+                    //console.log("with:",pBank_name+'-'+pAll_key);
                     if (allData[i].banks[j].id == pBank_name+'-'+pAll_key) {
                         //console.log("createUpdateBank add bill, target bank:",allData[i].banks[j]);
 
@@ -1811,19 +1668,11 @@ Page({
                                     let bill = allData[i].banks[j].bills[k];
 
                                     if (pFlag == 'EditBill') {
-                                        
-                                        console.log('createUpdateBank memo check:',bill.memo);
-                                        
                                         this.navigateToBill('show=' + pFlag + '&title=修改账单&id=' + bill.id + '&name=' + bill.name +
                                             '&toPay=' + bill.toPay + '&date=' + bill.date + '&payed=' + bill.payed +'&memo=' + bill.memo+'&bankName='+bank2up.name);
                                     }else if(pFlag == 'payBill'){ 
-                                        console.log("before set all:",that.data.all)
-                                        //must recreate the data to update otherwise be effect
-                                        //bank2up.bills[k].payed=true;
                                         bank2up.bills[k]={id:bill.id, name:bill.name, date:bill.date,memo:bill.memo, toPay:bill.toPay,payed:!bill.payed,changed:true}
                                         that.setData({ updateBank: bank2up });
-                                        console.log("after set all:",that.data.all)
-                                        console.log("check updateBank:",that.data.updateBank)
                                         that.updataStorage(pFlag);
                                     }
                                     break;
@@ -1834,7 +1683,6 @@ Page({
                             this.navigateToBill('show=' + pFlag + '&title=添加账单&id=' + bank2up.id);
                         }
                         if (pFlag == 'EditBank') {
-                            console.log("To EditBank");
                             this.navigateToBill('show=' + pFlag + '&title=修改银行&id=' + bank2up.id);
                         }
 
@@ -1857,22 +1705,8 @@ Page({
             case 'AddBill':
             case 'EditBank':
             case 'delBill':
-                console.log('delBill--:',pBill_name,pBank_name,pAll_key,pFlag);
                 that.createUpdateBank_bills(pBill_name, pBank_name, pAll_key, pFlag);
                 break;
-
-            case 'AddBank':
-                for (let i = 0; i < allData.length; i++) {
-                    if (allData[i].key == pAll_key) {
-                        bank2up.bank_index = allData[i].banks.length;
-                        bank2up.data_index = i; //id and bill_index are not set
-                        bank2up.bills = [];
-                        this.navigateToBill('show=' + pFlag + '&title=添加银行卡&id=' + pAll_key);
-                    }
-                }
-                that.setData({ updateBank: bank2up });
-                break;
-            
             case 'upBank':
             case 'downBank':
                 for (let i = 0; i < allData.length; i++) {
@@ -1905,7 +1739,6 @@ Page({
                 }
                 that.setData({ updateBank: bank2up });
                 break;
-
         }
         //that.setData({ updateBank: bank2up });
     },

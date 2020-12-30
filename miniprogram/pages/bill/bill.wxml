@@ -1,6 +1,6 @@
 <!--miniprogram/pages/bill/bill.wxml-->
 
-<!--edit bill todo bank-->
+<!--edit bill-->
 <view class="container" wx:if="{{showEditBill || showThing2Bill}}">
   <view class="center bold" wx:if="{{showEditBill}}">
     
@@ -115,35 +115,7 @@
   </view>
   
   
-<!--
-<view class="section">
-  <picker mode="date" fields="day" value="{{date}}" start="2019-01-01" end="2021-12-01" bindchange="bindDateChange">
-    <text class="picker">
-      微信官方日期选择器: {{date}}
-    </text>
-  </picker>
-</view>
 
-<view class="birthday" bindtap="showBirthday">
-  <text> 自定义日期选择器：</text>
-  <text>{{year}}年{{month}}月{{day}}日</text>
-</view>
-
-<view class="birthday-mask" hidden="{{!birthdayshow}}"></view>
-<view class="birthday-box {{birthdayshow?'birthday-show':''}}">
-  <view class="picker-header">
-    <view class="picker-btn" data-index="{{index}}" wx:for="{{picker_btn}}" wx:key bindtap="selectBirthday">{{item}}</view>
-  </view>
-  <picker-view class="birthday-picker" indicator-class="birthday-indicator" value="{{value}}" bindchange="bindChange">
-    <picker-view-column>
-      <view wx:for="{{years}}" wx:key>{{item}}年</view>
-    </picker-view-column>
-    <picker-view-column>
-      <view wx:for="{{months}}" wx:key>{{item}}月</view>
-    </picker-view-column>
-  </picker-view>
-</view>
--->
 </view>
 
 <!--add bill-->
@@ -208,13 +180,13 @@
 </view>
 
 
-<!--add bill from menu todo
-
-
-<scroll-view  wx:if="{{showMenuAddBill}}" scroll-y="true" style="height:1061.25rpx;">
--->
 <view class="container scroll" wx:if="{{showMenuAddBill}}">
 
+<!--
+<scroll-view  wx:if="{{showMenuAddBill}}" scroll-y="true" style="height:{{winHeight}};">
+add bill from menu todo
+<view class="container scroll" wx:if="{{showMenuAddBill}}">
+-->
   <view class="item-bottom between">
     <view class="between">
       <view >选择账本:</view>
@@ -275,22 +247,6 @@
     </view>
   </view>
 
-
-<!--
-  <view class="item-bottom bold">
-    <view >选择银行:</view>
-  </view>
-  
-  <view >
-    <picker-view class="birthday-picker" 
-    indicator-class="birthday-indicator" 
-    bindchange="bindChange" id="banks">
-      <picker-view-column>
-        <view wx:for="{{banks}}" wx:key="*this">{{item}}</view>
-      </picker-view-column>
-    </picker-view>
-  </view>
--->
   <view class="start item-top">
     <view>账单名称:</view>
   </view>
@@ -307,14 +263,11 @@
     inputType="digit" 
     bind:inputListener='input' id="toPay"/>
   </view>
-
-<!--
   <view class="item between">
     <view class="between">
-      <view>付款日期:</view>
-      <view class="line center" style="width:250rpx" bindtap="onShowPickDay">
-        <view wx:if="{{val<0}}">点击选择日期</view>
-        <view wx:else>{{month}}月{{day}}日</view>
+      <view>付款日期：</view>
+      <view class="line" style="width:200rpx" bindtap="onShowPickDay">
+        {{month}}月{{day}}日
       </view>
     </view>
     <view class="between">
@@ -323,7 +276,7 @@
       </checkbox-group> 
       <view>已付</view>
     </view>
-  </view> 
+  </view>  
 
   <view class="birthday-box {{showPickDay?'birthday-show':''}}">
     <view class="picker-header">
@@ -338,7 +291,7 @@
       </picker-view-column>
     </picker-view>
   </view>
--->
+<!--
   <view class="item bold">
     <view >付款日期：</view>
   </view>
@@ -360,7 +313,7 @@
     </checkbox-group>   
     <view>已付</view>
   </view>
-
+-->
   <view class="start">MEMO:</view>
   <view class="item-bottom">
     <clearInput cellWidth="100%" 
@@ -378,7 +331,7 @@
 <!-- if use scroll view 
 </scroll-view> 
 
-
+</view>
   <view class="tab-h2 between"  wx:if="{{showMenuAddBill}}">
     <view class="item-test">
       <view class="container-item-btn" bindtap="cancel" >取消</view>
@@ -493,13 +446,13 @@ wx:if="{{showDelBank}}"></view>
   <view >
     <picker-view class="birthday-picker" indicator-class="birthday-indicator" value="{{val}}" bindchange="bindChange">
       <picker-view-column>
-        <view wx:for="{{years}}" wx:key="*this">{{item}}年</view>
+        <view wx:for="{{years}}" wx:key="*this">{{item}}/</view>
       </picker-view-column>
       <picker-view-column>
-        <view wx:for="{{months}}" wx:key="*this">{{item}}月</view>
+        <view wx:for="{{months}}" wx:key="*this">{{item}}/</view>
       </picker-view-column>
       <picker-view-column>
-        <view wx:for="{{days}}" wx:key="*this">{{item}}日</view>
+        <view wx:for="{{days}}" wx:key="*this">{{item}}</view>
       </picker-view-column>
     </picker-view>
   </view>
@@ -543,7 +496,7 @@ wx:if="{{showDelBank}}"></view>
       <view>付款日期：</view>
       <view class="line" style="width:200rpx;font-Size:28rpx;" 
       bindtap="onShowPickDay" id="todo">
-        {{year}}年{{month}}月{{day}}日
+        {{year}}/{{month}}/{{day}}
       </view>
     </view>
     <view class="between">

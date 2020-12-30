@@ -49,7 +49,7 @@ Component({
       */
   methods: {
     inputFocus: function(e){
-      console.log('inputFocus---:',e.detail.value);
+      //console.log('inputFocus---:',e.detail.value);
       this.setData({
         isClearShow: true,
         value: e.detail.value
@@ -57,7 +57,7 @@ Component({
       });
     },
     inputBlur: function(e){
-      console.log('inputBlur--',this.data.isClearShow);
+      //console.log('inputBlur--',this.data.isClearShow);
       this.setData({
         isClearShow: false,
       //  keyboard: true,
@@ -83,7 +83,7 @@ Component({
     },
 
     inputConfirm: function (e) {
-      console.log("inputconfirm----no use yet");
+      //console.log("inputconfirm----no use yet");
       var value = e.detail.value;
       var detail = {
         value: value

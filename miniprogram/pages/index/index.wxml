@@ -19,8 +19,7 @@
                         cellHeight="120rpx"
                         bind:deleteItemEvent='deleteRecord'>
               <view class="date-container">
-                <view class="date-container-txt">{{item.name}}</view>
-                <!--<text class="date-container-btn" bindtap="addBank" id="{{item.key}}" data-status="AddBank">添加银行</text> -->       
+                <view class="date-container-txt">{{item.name}}</view>   
               </view>
             </slideitem>
 
@@ -266,16 +265,7 @@ wx:if="{{showTop}}"></view>
 <view class="modal-footer"></view>
 </view>
 
-<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove"
-wx:if="{{showLast}}"></view>
-<view class="modal-dialog" wx:if="{{showLast}}">
-  <view class="modal-title">加载上一个月</view>
 
-  <view class="modal-footer">
-    <button size="mini" class="btn-modal" bindtap="onCancel" data-status="cancel">取消</button>
-    <button size="mini" class="btn-modal" bindtap="onShowLast" >确定</button>
-  </view>
-</view>
 
 
 

@@ -27,7 +27,9 @@
     "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
     "packNpmManually": false,
-    "packNpmRelationList": []
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "scopeDataCheck": false
   },
   "compileType": "miniprogram",
   "libVersion": "2.8.1",

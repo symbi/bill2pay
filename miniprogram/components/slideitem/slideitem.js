@@ -99,18 +99,18 @@ Component({
     },
     //show btn with edit here
     touchE: function (e) {
-      console.log("touchE---:",this.properties)
+      //console.log("touchE---:",this.properties)
       if (e.changedTouches.length == 1) {
         //手指移动结束后水平位置
         var endX = e.changedTouches[0].clientX;
         //触摸开始与结束，手指移动的距离
         var disX = this.data.startX - endX;
         var delBtnWidth = this.data.delBtnWidth*this.properties.showBtn-3;
-        console.log("touchE---:",disX,delBtnWidth/3)
+        //console.log("touchE---:",disX,delBtnWidth/3)
         //如果距离小于删除按钮的1/3，不显示删除按钮
         var txtStyle = disX > delBtnWidth / 6 ? "left:-" + delBtnWidth + "rpx" : "left:0rpx";
         if (txtStyle != "left:0rpx"){
-          console.log("trigger slide item event")
+          //console.log("trigger slide item event")
           this.triggerEvent('slideItemEvent', { row: this.data.row, section: this.data.section });
         }
         this.setData({

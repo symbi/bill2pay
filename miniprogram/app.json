@@ -7,7 +7,7 @@
     "backgroundColor": "#FBE8BC",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#FBE8BC",
-    "navigationBarTitleText": "支出手帐",
+    "navigationBarTitleText": "TODO支出账",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json",

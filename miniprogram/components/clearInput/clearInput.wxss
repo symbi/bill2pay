@@ -29,8 +29,8 @@
     vertical-align: center;
 }
 .clear {
-    width:50rpx;
-    height:20rpx;
+    width:80rpx;
+    height:50rpx;
     align-items: center;
     justify-content: center; 
     display: flex;
