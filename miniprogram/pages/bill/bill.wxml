@@ -446,13 +446,13 @@ wx:if="{{showDelBank}}"></view>
   <view >
     <picker-view class="birthday-picker" indicator-class="birthday-indicator" value="{{val}}" bindchange="bindChange">
       <picker-view-column>
-        <view wx:for="{{years}}" wx:key="*this">{{item}}/</view>
+        <view wx:for="{{years}}" wx:key="*this">{{item}}年</view>
       </picker-view-column>
       <picker-view-column>
-        <view wx:for="{{months}}" wx:key="*this">{{item}}/</view>
+        <view wx:for="{{months}}" wx:key="*this">{{item}}月</view>
       </picker-view-column>
       <picker-view-column>
-        <view wx:for="{{days}}" wx:key="*this">{{item}}</view>
+        <view wx:for="{{days}}" wx:key="*this">{{item}}日</view>
       </picker-view-column>
     </picker-view>
   </view>

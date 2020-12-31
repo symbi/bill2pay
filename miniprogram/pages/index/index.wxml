@@ -31,9 +31,6 @@
                   <text bindtap="addBill" id="{{item.id}}" data-status="AddBill">㊉</text>
                   <text bindtap="addBill" id="{{item.id}}" data-status="downBank">∨</text>
                 </view>
-                <!--
-                <view class="bank-container-btn-add"  bindtap="addBill" id="{{item.id}}" data-status="AddBill">㊉</view>
-                -->
               </view>
               
               <slideitem  id="{{billItem.id}}" 
